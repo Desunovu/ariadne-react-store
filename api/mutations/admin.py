@@ -33,7 +33,7 @@ def resolve_add_product(_obj, _info, **kwargs):
     if "characteristicIds" in kwargs:
         status = add_product_characteristics(
             product_id=product.id,
-            characteristics_ids=kwargs["characteristicIds"]
+            characteristic_ids=kwargs["characteristicIds"]
         )
         if not status:
             errors.append(Errors.CHARACTERISTICS_NOT_SET)
