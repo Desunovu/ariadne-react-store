@@ -4,6 +4,7 @@ import dotenv
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from minio import Minio
 
 dotenv.load_dotenv()
@@ -11,6 +12,9 @@ dotenv.load_dotenv()
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object(os.environ.get("FLASK_CONFIG"))
 app.secret_key = os.environ.get("APP_SECRET_KEY")
+
+# CORS
+CORS(app)
 
 # Database
 db = SQLAlchemy(app)
