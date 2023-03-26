@@ -23,6 +23,9 @@ function Register(props) {
     const context = useContext(AuthContext);
     let navigate = useNavigate();
     const [errors, setErrors] = useState([]);
+    const [status, setStatus] = useState(false)
+    const [user, setUser] = useState(undefined);
+
 
     function createUserCallback() {
         console.log("Callback hit");
@@ -34,10 +37,15 @@ function Register(props) {
         password: ""
     })
 
-    const [createUser, { loading, error, data }] = useMutation(
+    const [createUser, {data }] = useMutation(
         CREATE_USER, {
             onError({ graphQLErrors}) {
                 setErrors(graphQLErrors);
+            },
+            onCompleted: (data) => {
+              setErrors(data.createUser.errors);
+              setStatus(data.createUser.status);
+              setUser(data.createUser.user);
             },
             variables: {
                 email: values.email,
@@ -68,7 +76,10 @@ function Register(props) {
                         {error.message}
                     </Alert>
                 )
-            })}S
+            })}
+            {status &&
+                <h2>Успешно создан пользователь {user.email}</h2>
+            }
             <Button variant="contained" onClick={onSubmit}>Создать учетную запись</Button>
         </Container>
     )
