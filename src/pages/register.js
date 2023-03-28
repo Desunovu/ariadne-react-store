@@ -26,7 +26,6 @@ function Register(props) {
     const [status, setStatus] = useState(false)
     const [user, setUser] = useState(undefined);
 
-
     function createUserCallback() {
         console.log("Callback hit");
         createUser();
