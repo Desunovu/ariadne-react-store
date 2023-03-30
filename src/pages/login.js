@@ -2,7 +2,7 @@ import React from "react";
 import {useContext, useState} from "react";
 import {AuthContext} from "../context/authContext";
 import {useForm} from "../utility/hooks";
-import {useLazyQuery, useQuery, gql} from "@apollo/react-hooks";
+import {useLazyQuery, gql} from "@apollo/react-hooks";
 import {TextField, Button, Container, Stack, Alert} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
@@ -24,11 +24,9 @@ const LOGIN_USER = gql`
 
 function Login(props) {
     let navigate = useNavigate();
-    const [errors, setErrors] = useState([]);
-    const [apolloErrors, setApolloErrors] = useState([]);
     const context = useContext(AuthContext);
     const [status, setStatus] = useState();
-    const [token, setToken] = useState();
+    const [errors, setErrors] = useState([]);
 
     function loginUserCallback() {
         console.log("Callback hit");
@@ -43,19 +41,23 @@ function Login(props) {
         password: ""
     })
 
-    const [loginUser, {data, error}] = useLazyQuery(
+    const [loginUser, {data, isError, error}] = useLazyQuery(
         LOGIN_USER, {
-            onError(){
-                console.log(error);
+            onError: () => {
+                console.log(error.graphQLErrors)
+                setStatus(false);
             },
             onCompleted: (data) => {
                 setErrors(data.loginUser.errors);
                 setStatus(data.loginUser.status);
-                setToken(data.loginUser.token);
                 context.login(data.loginUser);
             },
         }
     );
+
+    if (status) {
+        navigate("/");
+    }
 
     return(
         <Container spacing={2} maxWidth="sm">
@@ -78,9 +80,7 @@ function Login(props) {
             {errors.map(backendError =>(
                 <Alert key={backendError.code} severity="error">{backendError.message}</Alert>
             ))}
-            {apolloErrors.map(apolloError =>(
-                <Alert severity="error">{apolloError}</Alert>
-            ))}
+
         </Container>
     )
 }
