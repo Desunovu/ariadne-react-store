@@ -16,8 +16,11 @@ function Navbar() {
     console.log(user);
 
     return (
-        <Box sf={{FlexGrow: 1}}>
-            <AppBar position="static">
+        <Box sf={{display: "flex"}}>
+            <AppBar
+                position="fixed"
+                sx={{ zIndex: (theme) => theme.zIndex.drawer +  1}}
+            >
                 <Toolbar>
                     <Typography variant="h5" component="div">
                         <Link to="/" style={{textDecoration: "none", color: "white"}}>React Login</Link>

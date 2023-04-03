@@ -41,7 +41,7 @@ function Login(props) {
         password: ""
     })
 
-    const [loginUser, {data, isError, error}] = useLazyQuery(
+    const [loginUser, {error}] = useLazyQuery(
         LOGIN_USER, {
             onError: () => {
                 console.log(error.graphQLErrors)
