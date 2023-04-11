@@ -23,7 +23,7 @@ function Navbar() {
             >
                 <Toolbar>
                     <Typography variant="h5" component="div">
-                        <Link to="/" style={{textDecoration: "none", color: "white"}}>React Login</Link>
+                        <Link to="/" style={{textDecoration: "none", color: "white"}}>D3$uN0Vu STORE</Link>
                     </Typography>
                     <Box alignItems="right" sx={{flexGrow: 1, textAlign: "right"}}>
                         { user ?
