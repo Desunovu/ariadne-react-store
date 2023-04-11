@@ -7,11 +7,12 @@ import {
     List,
     ListItem,
     ListItemText,
-    ListItemButton, Toolbar
+    ListItemButton, Toolbar, Container, Grid
 } from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "../context/authContext";
+import {AuthContext} from "../../context/authContext";
 import {gql, useQuery} from "@apollo/react-hooks";
+import UserElement from "./UserElement";
 
 const GET_USERS=gql`
     query GetUsers(
@@ -23,13 +24,25 @@ const GET_USERS=gql`
            sort: $sort
         ){
             status
-            errors{message}
-            users{id, email, role, firstName, lastName}
+            errors {
+              code
+              message
+            }
+            users {
+              id
+              email
+              role
+              avatarUrl
+              firstName
+              lastName
+              address
+              phoneNumber
+            }
         }
     }
 `
 
-function UsersTable(props) {
+function GetUsersMenu(props) {
     const { user } = useContext(AuthContext);
     let navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -45,22 +58,15 @@ function UsersTable(props) {
     )
 
     return (
-        <div>
-            <Box>
-                <h3> СПИСОК ПОЛЬЗОВАТЕЛЕЙ </h3>
-                <List>
-                    {users.map(user => (
-                        <ListItem
-                            key={user.id}
-
-                        >
-                            {user.email}
-                        </ListItem>
-                    ))}
-                </List>
-            </Box>
-        </div>
+        <Container spacing={2} maxWidth="md">
+            <h3>Список пользователей сайта</h3>
+            <Grid container spacing={5}>
+                {users.map((_user) => (
+                    <UserElement user={_user}/>
+                ))}
+            </Grid>
+        </Container>
     )
 }
 
-export default UsersTable;
+export default GetUsersMenu;

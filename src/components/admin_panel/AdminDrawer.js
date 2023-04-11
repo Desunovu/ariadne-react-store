@@ -10,7 +10,7 @@ import {
     ListItemButton, Toolbar
 } from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "../context/authContext";
+import {AuthContext} from "../../context/authContext";
 
 const drawerWidth = 240;
 
