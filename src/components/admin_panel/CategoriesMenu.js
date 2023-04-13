@@ -1,42 +1,15 @@
 import React, {useState} from "react";
 import {
-    Button, Card,
-    Container, Grid, MenuItem, Stack, TextField
+    Button, Card, CardActions, CardContent, Container, Grid, IconButton, Stack, TextField, Typography
 } from "@mui/material";
+import { Delete } from "@mui/icons-material"
 
-import { gql, useQuery, useMutation } from "@apollo/react-hooks";
+import {ADD_CATEGORY} from "../../operations/mutations/addCategory";
+import {REMOVE_CATEGORY} from "../../operations/mutations/removeCategory";
+import {GET_CATEGORIES} from "../../operations/queries/getCategories";
+import { useQuery, useMutation } from "@apollo/react-hooks";
+
 import {useForm} from "../../utility/hooks";
-
-const GET_CATEGORIES = gql`
-    query GetCategories(
-        $pagination: Pagination
-        $sort: SortGetProducts
-    ){
-        getCategories(
-            pagination: $pagination
-            sort: $sort
-        ){
-            status
-            errors{message}
-            categories{
-                id
-                name
-            }
-        }
-    }
-`;
-
-const ADD_CATEGORY = gql`
-    mutation AddCategory(
-        $name: String!
-    ){
-        addCategory(name: $name){
-            status
-            errors{message}
-            category{id, name}
-        }
-    }
-`;
 
 function CategoriesMenu(props){
     const [categories, setCategories] = useState([]);
@@ -48,6 +21,16 @@ function CategoriesMenu(props){
             }
         });
     }
+
+    function removeCategoryCallback(id) {
+        console.log(id);
+        removeCategory({
+            variables:{
+                id: id
+            }
+        });
+    }
+
     const { onChange, onSubmit, values } = useForm(addCategoryCallback, {
         name: "Категория"
     })
@@ -60,7 +43,7 @@ function CategoriesMenu(props){
         }
     )
 
-    const [addCategory, {}] = useMutation(
+    const [addCategory] = useMutation(
         ADD_CATEGORY,{
             onCompleted: (data) => {
                 console.log(data);
@@ -69,13 +52,38 @@ function CategoriesMenu(props){
         }
     );
 
+    const [removeCategory] = useMutation(
+        REMOVE_CATEGORY, {
+            onCompleted: (data) => {
+                console.log(data);
+                refetch();
+            }
+        }
+    )
+
     return (
         <Container spacing={2} maxWidth="md">
             <h3>Список категорий для товаров</h3>
             <Grid container spacing={2}>
                 {categories.map((category) => (
                     <Grid item xs="auto" md={3}>
-                        <Card>{category.name} (id: {category.id})</Card>
+                        <Card sx={{ p: 0.5, display: "flex", flexDirection: "row", justifyContent: "flex-start"}}>
+                            <CardContent sx={{flex: "1 0 auto", display: "flex", flexDirection: "column"}}>
+                                <Typography variant="body">
+                                    {category.name}
+                                </Typography>
+                                <Typography variant="caption">
+                                    id: {category.id}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <IconButton
+                                    onClick={(e) => removeCategoryCallback(category.id)}
+                                >
+                                    <Delete/>
+                                </IconButton>
+                            </CardActions>
+                        </Card>
                     </Grid>
                 ))}
             </Grid>

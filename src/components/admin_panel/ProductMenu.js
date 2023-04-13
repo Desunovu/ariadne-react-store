@@ -8,11 +8,13 @@ import {
     List,
     ListItem,
     ListItemText,
-    ListItemButton, Toolbar, Stack, TextField, Container
+    ListItemButton, Toolbar, Stack, TextField, Container, Select, MenuItem, InputLabel, FormControl, Chip
 } from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/authContext";
-import {gql, useMutation} from "@apollo/react-hooks";
+import {gql, useMutation, useQuery} from "@apollo/react-hooks";
+
+import {GET_CATEGORIES} from "../../operations/queries/getCategories";
 
 const ADD_PRODUCT = gql`
     mutation AddProduct(
@@ -20,12 +22,14 @@ const ADD_PRODUCT = gql`
         $price: Int!
         $amount: Int!
         $description: String!
+        $categoryIds: [Int!]
     ) {
         addProduct(
             name: $name,
             price: $price,
             amount: $amount,
             description: $description,
+            categoryIds: $categoryIds
         ){
             status
             errors{message}
@@ -46,6 +50,17 @@ const ADD_PRODUCT = gql`
 `
 
 function ProductMenu(props) {
+    const [categories, setCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const { refetch } = useQuery(
+        GET_CATEGORIES, {
+            onCompleted: (data) => {
+                setCategories(data.getCategories.categories);
+                console.log(data.getCategories.categories);
+            }
+        }
+    );
 
     const [addProduct, {}] = useMutation(
         ADD_PRODUCT,
@@ -60,7 +75,8 @@ function ProductMenu(props) {
                 name: values.name,
                 price: parseInt(values.price),
                 amount: parseInt(values.amount),
-                description: values.description
+                description: values.description,
+                categoryIds: Array.from(selectedCategories, category => category.id)
             }
         });
         console.log("add product callback hit")
@@ -71,11 +87,15 @@ function ProductMenu(props) {
         price: "100",
         amount: "10",
         description: "Описание товара",
-        categories: [],
+        categoryIds: [],
         images: [],
         characteristics: []
     })
 
+    function handleCategoriesChange(event) {
+        const { value } = event.target;
+        setSelectedCategories(value);
+    }
 
     return (
         <>
@@ -106,6 +126,28 @@ function ProductMenu(props) {
                         name="description"
                         onChange={onChange}
                     />
+                    <FormControl>
+                        <InputLabel id="categories-label">Категории</InputLabel>
+                        <Select
+                            labelId="categories-label"
+                            label="Категории"
+                            name="categories"
+                            multiple
+                            value={selectedCategories}
+                            onChange={handleCategoriesChange}
+                            renderValue={(selected) => (
+                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value.id} label={value.name} />
+                                    ))}
+                                </Box>
+                            )}
+                        >
+                            {categories.map((category) => (
+                                <MenuItem key={category.id} value={category}>{category.name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </Stack>
                 <Button variant="contained" onClick={onSubmit}>Постучаться</Button>
             </Container>

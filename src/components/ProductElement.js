@@ -1,5 +1,17 @@
 import React from "react";
-import {Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Item, Typography} from "@mui/material";
+import {
+    Box,
+    Button,
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Chip,
+    Grid,
+    Item,
+    Typography
+} from "@mui/material";
 
 function ProductElement(props){
     const { product } = props;
@@ -9,13 +21,15 @@ function ProductElement(props){
             <Card sx={{display: "flex", justifyContent: "flex-start", flexDirection: "column", height: 300,}}>
                 <CardActionArea sx={{flex: "1 0 auto"}}>
                     <CardContent sx={{position: "absolute", top: 0}}>
-                        <Typography variant="body">
-                            <b>ID:</b> {product.id}<br/>
-                            <b>Название:</b> {product.name}<br/>
-                            <b>Количество:</b> {product.amount}<br/>
-                            <b>Стоимость:</b> {product.price} ₽<br/>
-                            <b>Описание:</b> {product.description}<br/>
-                        </Typography>
+                        <Typography variant="h5">{product.name}</Typography>
+                        <b>Количество:</b> {product.amount}<br/>
+                        <b>Стоимость:</b> {product.price} ₽<br/>
+                        <b>Описание:</b> {product.description}<br/>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {product.categories.map((category) => (
+                                <Chip label={category.name}/>
+                            ))}
+                        </Box>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
