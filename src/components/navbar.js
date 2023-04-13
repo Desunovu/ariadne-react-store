@@ -28,6 +28,11 @@ function Navbar() {
                     <Box alignItems="right" sx={{flexGrow: 1, textAlign: "right"}}>
                         { user ?
                             <div>
+                                {document.location.pathname !== "/admin" &&
+                                    <Link to="/admin" sx={{textDecoration: "none", color: "white", marginRight: "10px"}}>
+                                        Панель администратора
+                                    </Link>
+                                }
                                 <Button style={{textDecoration: "none", color: "white"}} onClick={onLogout}>Выйти</Button>
                             </div>
                             :
