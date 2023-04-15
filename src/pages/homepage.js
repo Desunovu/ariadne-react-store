@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {AuthContext} from "../context/authContext";
-import GetProductsMenu from "../components/GetProductsMenu";
+import GetProductsMenu from "../components/homepage/GetProductsMenu";
 
 function Homepage() {
     const { user } = useContext(AuthContext);
