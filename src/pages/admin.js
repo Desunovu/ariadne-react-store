@@ -1,16 +1,13 @@
 import React from "react";
-import {useContext, useState} from "react";
-import {AuthContext} from "../context/authContext";
-import {useForm} from "../utility/hooks";
-import {useLazyQuery, gql} from "@apollo/react-hooks";
-import {TextField, Button, Container, Stack, Alert, List, Box, Toolbar} from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import {Box, Toolbar} from "@mui/material";
 import AdminDrawer from "../components/admin_panel/AdminDrawer";
 import UsersMenu from "../components/admin_panel/users/UsersMenu";
 import AddProductMenu from "../components/admin_panel/add_product/AddProductMenu";
 import CategoriesMenu from "../components/admin_panel/categories/CategoriesMenu";
+import CharacteristicMenu from "../components/admin_panel/characteristics/CharacteristicMenu";
 
-function Admin(props){
+function Admin(){
     const [selectedIndex, setSelectedIndex] = useState(0);
     const actions  = [
         {index: 0, text: "Пользователи"},
@@ -36,6 +33,8 @@ function Admin(props){
                         return <AddProductMenu/>
                     case 2:
                         return <CategoriesMenu/>
+                    case 3:
+                        return <CharacteristicMenu/>
                     default:
                         return null
                 }
