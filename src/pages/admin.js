@@ -6,9 +6,9 @@ import {useLazyQuery, gql} from "@apollo/react-hooks";
 import {TextField, Button, Container, Stack, Alert, List, Box, Toolbar} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import AdminDrawer from "../components/admin_panel/AdminDrawer";
-import GetUsersMenu from "../components/admin_panel/GetUsersMenu";
-import ProductMenu from "../components/admin_panel/ProductMenu";
-import CategoriesMenu from "../components/admin_panel/CategoriesMenu";
+import UsersMenu from "../components/admin_panel/users/UsersMenu";
+import AddProductMenu from "../components/admin_panel/add_product/AddProductMenu";
+import CategoriesMenu from "../components/admin_panel/categories/CategoriesMenu";
 
 function Admin(props){
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -31,9 +31,9 @@ function Admin(props){
             {(() => {
                 switch (selectedIndex) {
                     case 0:{
-                        return <GetUsersMenu/>}
+                        return <UsersMenu/>}
                     case 1:
-                        return <ProductMenu/>
+                        return <AddProductMenu/>
                     case 2:
                         return <CategoriesMenu/>
                     default:

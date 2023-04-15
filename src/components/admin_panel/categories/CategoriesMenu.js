@@ -4,12 +4,12 @@ import {
 } from "@mui/material";
 import { Delete } from "@mui/icons-material"
 
-import {ADD_CATEGORY} from "../../operations/mutations/addCategory";
-import {REMOVE_CATEGORY} from "../../operations/mutations/removeCategory";
-import {GET_CATEGORIES} from "../../operations/queries/getCategories";
+import {ADD_CATEGORY} from "../../../operations/mutations/addCategory";
+import {REMOVE_CATEGORY} from "../../../operations/mutations/removeCategory";
+import {GET_CATEGORIES} from "../../../operations/queries/getCategories";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import {useForm} from "../../utility/hooks";
+import {useForm} from "../../../utility/hooks";
 
 function CategoriesMenu(props){
     const [categories, setCategories] = useState([]);

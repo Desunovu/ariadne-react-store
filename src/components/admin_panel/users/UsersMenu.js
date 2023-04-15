@@ -10,7 +10,7 @@ import {
     ListItemButton, Toolbar, Container, Grid
 } from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "../../context/authContext";
+import {AuthContext} from "../../../context/authContext";
 import {gql, useQuery} from "@apollo/react-hooks";
 import UserElement from "./UserElement";
 
@@ -42,7 +42,7 @@ const GET_USERS=gql`
     }
 `
 
-function GetUsersMenu(props) {
+function UsersMenu(props) {
     const { user } = useContext(AuthContext);
     let navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -69,4 +69,4 @@ function GetUsersMenu(props) {
     )
 }
 
-export default GetUsersMenu;
+export default UsersMenu;

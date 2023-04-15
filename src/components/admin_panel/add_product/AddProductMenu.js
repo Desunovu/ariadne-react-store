@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {useForm} from "../../utility/hooks";
+import {useForm} from "../../../utility/hooks";
 import {
     Box,
     Typography,
@@ -11,10 +11,10 @@ import {
     ListItemButton, Toolbar, Stack, TextField, Container, Select, MenuItem, InputLabel, FormControl, Chip
 } from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "../../context/authContext";
+import {AuthContext} from "../../../context/authContext";
 import {gql, useMutation, useQuery} from "@apollo/react-hooks";
 
-import {GET_CATEGORIES} from "../../operations/queries/getCategories";
+import {GET_CATEGORIES} from "../../../operations/queries/getCategories";
 
 const ADD_PRODUCT = gql`
     mutation AddProduct(
@@ -49,7 +49,7 @@ const ADD_PRODUCT = gql`
     }
 `
 
-function ProductMenu(props) {
+function AddProductMenu(props) {
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -156,4 +156,4 @@ function ProductMenu(props) {
     )
 }
 
-export default ProductMenu;
+export default AddProductMenu;
