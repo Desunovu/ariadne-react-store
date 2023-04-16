@@ -24,7 +24,6 @@ function Admin(){
                 setSelectedIndex={setSelectedIndex}
             />
             <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
-                <Toolbar/>
             {(() => {
                 switch (selectedIndex) {
                     case 0:{

@@ -10,6 +10,7 @@ import {
     Grid,
     Typography
 } from "@mui/material";
+import {Link} from "react-router-dom";
 
 function ProductElement(props){
     const { product } = props;
@@ -17,7 +18,7 @@ function ProductElement(props){
     return (
         <Grid item xs="auto" md={4}>
             <Card sx={{display: "flex", justifyContent: "flex-start", flexDirection: "column", height: 300,}}>
-                <CardActionArea sx={{flex: "1 0 auto"}}>
+                <CardActionArea component={Link} to={"/product/"+product.id} sx={{flex: "1 0 auto"}}>
                     <CardContent sx={{position: "absolute", top: 0}}>
                         <Typography variant="h5">{product.name}</Typography>
                         <b>Количество:</b> {product.amount}<br/>
