@@ -3,14 +3,16 @@ import {Container, Grid} from "@mui/material";
 import {useQuery} from "@apollo/react-hooks";
 import ProductElement from "./ProductElement";
 import {GET_PRODUCTS} from "../../operations/queries/getProducts";
+import ErrorsHandler from "../ErrorsHandler";
 
 function GetProductsMenu(){
     const [products, setProducts] = useState([]);
+    const [errors, setErrors] = useState([]);
 
-    useQuery(
+    const { error } = useQuery(
         GET_PRODUCTS, {
             onCompleted: (data) => {
-                console.log(data)
+                setErrors(data.getProducts.errors)
                 setProducts(data.getProducts.products)
             }
         }
@@ -19,6 +21,7 @@ function GetProductsMenu(){
     return (
         <Container spacing={2} maxWidth="md" sx={{mb: 2}}>
             <h3>Список товаров сайта</h3>
+            <ErrorsHandler errors={errors} apolloError={error}/>
             <Grid container spacing={5}>
                 {products.map((product) => (
                     <ProductElement product={product}/>
