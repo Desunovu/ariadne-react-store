@@ -3,8 +3,9 @@ import {useContext, useState} from "react";
 import {AuthContext} from "../context/authContext";
 import {useForm} from "../utility/hooks";
 import {useLazyQuery, gql} from "@apollo/react-hooks";
-import {TextField, Button, Container, Stack, Alert} from "@mui/material";
+import {TextField, Button, Container, Stack} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import ErrorsHandler from "../components/ErrorsHandler";
 
 const LOGIN_USER = gql`
     query LoginUser(
@@ -22,7 +23,7 @@ const LOGIN_USER = gql`
     }
 `;
 
-function Login(props) {
+function Login() {
     let navigate = useNavigate();
     const context = useContext(AuthContext);
     const [status, setStatus] = useState();
@@ -43,10 +44,6 @@ function Login(props) {
 
     const [loginUser, {error}] = useLazyQuery(
         LOGIN_USER, {
-            onError: () => {
-                console.log(error.graphQLErrors)
-                setStatus(false);
-            },
             onCompleted: (data) => {
                 setErrors(data.loginUser.errors);
                 setStatus(data.loginUser.status);
@@ -77,9 +74,7 @@ function Login(props) {
             </Stack>
             <Button variant="contained" onClick={onSubmit}>Постучаться</Button>
 
-            {errors.map(backendError =>(
-                <Alert key={backendError.code} severity="error">{backendError.message}</Alert>
-            ))}
+            <ErrorsHandler errors={errors} apolloError={error}/>
 
         </Container>
     )
