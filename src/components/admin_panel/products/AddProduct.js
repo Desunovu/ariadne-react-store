@@ -1,16 +1,14 @@
+import {Button, Container, Stack, TextField} from "@mui/material";
+import SelectInput from "../SelectInput";
+import ErrorsHandler from "../../ErrorsHandler";
 import React, {useState} from "react";
-import {useForm} from "../../../utility/hooks";
-import { Button, Stack, TextField, Container } from "@mui/material";
 import {useMutation, useQuery} from "@apollo/react-hooks";
-
 import {GET_CATEGORIES} from "../../../operations/queries/getCategories";
 import {GET_CHARACTERISTICS} from "../../../operations/queries/getCharacteristics";
 import {ADD_PRODUCT} from "../../../operations/mutations/addProduct";
+import {useForm} from "../../../utility/hooks";
 
-import SelectInput from "../SelectInput";
-import ErrorsHandler from "../../ErrorsHandler";
-
-function AddProductMenu() {
+export default function AddProduct(){
     const errors = [];
     const [categories, setCategories] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
@@ -121,5 +119,3 @@ function AddProductMenu() {
         </>
     )
 }
-
-export default AddProductMenu;
