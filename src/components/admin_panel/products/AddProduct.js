@@ -81,41 +81,40 @@ export default function AddProduct(){
     console.log(productError);
 
     return (
-        <>
-            <Container spacing={2} maxWidth="md">
-                <h3> Добавление нового товара в базу </h3>
-                <Stack spacing={2} paddingBottom={2}>
-                    <TextField
-                        label="Название"
-                        defaultValue={values.name}
-                        name="name"
-                        onChange={onChange}
-                    />
-                    <TextField
-                        label="Стоимость"
-                        defaultValue={values.price}
-                        name="price"
-                        onChange={onChange}
-                    />
-                    <TextField
-                        label="Количество на складе"
-                        defaultValue={values.amount}
-                        name="amount"
-                        onChange={onChange}
-                    />
-                    <TextField
-                        label="Описание"
-                        defaultValue={values.description}
-                        name="description"
-                        onChange={onChange}
-                    />
-                    <SelectInput text="Категории" selected={selectedCategories} handleChange={handleCategoriesChange} items={categories}/>
-                    <SelectInput text="Характеристики" selected={selectedCharacteristics} handleChange={handleCharacteristicChange} items={characteristics}/>
-                </Stack>
-                <ErrorsHandler apolloError={productError} errors={errors}/>
-                <Button variant="contained" onClick={onSubmit}>Постучаться</Button>
-            </Container>
-
-        </>
+        <Container spacing={2} maxWidth="md">
+            <h3> Добавление нового товара в базу </h3>
+            <Stack spacing={2} paddingBottom={2}>
+                <TextField
+                    label="Название"
+                    defaultValue={values.name}
+                    name="name"
+                    onChange={onChange}
+                />
+                <TextField
+                    label="Стоимость"
+                    defaultValue={values.price}
+                    name="price"
+                    onChange={onChange}
+                />
+                <TextField
+                    label="Количество на складе"
+                    defaultValue={values.amount}
+                    name="amount"
+                    onChange={onChange}
+                />
+                <TextField
+                    label="Описание"
+                    defaultValue={values.description}
+                    name="description"
+                    onChange={onChange}
+                />
+                <SelectInput text="Категории" selected={selectedCategories} handleChange={handleCategoriesChange}
+                             items={categories}/>
+                <SelectInput text="Характеристики" selected={selectedCharacteristics}
+                             handleChange={handleCharacteristicChange} items={characteristics}/>
+            </Stack>
+            <ErrorsHandler apolloError={productError} errors={errors}/>
+            <Button variant="contained" onClick={onSubmit}>Добавить товар</Button>
+        </Container>
     )
 }

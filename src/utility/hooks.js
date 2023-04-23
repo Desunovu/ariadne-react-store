@@ -4,7 +4,11 @@ export const useForm = (callback, initialState = {}) => {
     const [values, setValues] = useState(initialState);
 
     const onChange = (event) => {
-        setValues({...values, [event.target.name]: event.target.value});
+        const value =
+          event.currentTarget.type === "number"
+            ? parseInt(event.currentTarget.value)
+            : event.currentTarget.value;
+        setValues({...values, [event.currentTarget.name]: value});
     }
 
     const onSubmit = (event) => {
