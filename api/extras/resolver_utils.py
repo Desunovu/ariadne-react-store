@@ -80,34 +80,34 @@ def delete_product_images(product_id: int, images_id=None, delete_all=False):
     return True
 
 
-def set_product_categories(product_id, category_ids=None):
+def add_product_categories(product_id, category_ids=None):
     try:
-        product_category_list = db.session.query(ProductCategory).filter(ProductCategory.product_id == product_id)
-        current_category_ids = [product_category.category_id for product_category in product_category_list]
-
-        # Добавляем новые категории, если их еще нет у товара
-        category_ids_to_add = [c_id for c_id in category_ids if c_id not in current_category_ids]
-        product_categories_to_add = [
-            ProductCategory(product_id=product_id, category_id=category_id)
-            for category_id
-            in category_ids_to_add
-        ]
-        db.session.bulk_save_objects(product_categories_to_add)
-
-        # Удаляем старые категории, если их нет в новом списке
-        category_ids_to_delete = [c_id for c_id in current_category_ids if c_id not in category_ids]
-        if category_ids_to_delete:
-            db.session.query(ProductCategory).filter(
-                ProductCategory.product_id == product_id,
-                ProductCategory.category_id.in_(category_ids_to_delete)
-            ).delete(synchronize_session=False)
-
-        # Сохраняем изменения в базе данных
+        product_categories = [ProductCategory(product_id=product_id, category_id=category_id) for category_id in
+                              category_ids]
+        db.session.bulk_save_objects(product_categories)
         db.session.commit()
-
         return True
     except Exception:
         db.session.rollback()
+        return False
+
+
+def remove_product_categories(product_id, category_ids=None, remove_all=False, ):
+    # Выражение для запроса
+    if remove_all:
+        stmt = db.session.query(ProductCategory).filter(ProductCategory.product_id == product_id)
+    else:
+        stmt = db.session.query(ProductCategory).filter(
+            ProductCategory.product_id == product_id,
+            ProductCategory.category_id.in_(category_ids)
+        )
+
+    # Удаление записей в БД
+    try:
+        stmt.delete()
+        db.session.commit()
+        return True
+    except Exception:
         return False
 
 

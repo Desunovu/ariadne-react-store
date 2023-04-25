@@ -41,7 +41,9 @@ type Mutation {
         addImages: [Upload!]
         removeImagesById: [Int!]
         deleteAllImages: Boolean
-        setCategoriesById: [Int!]
+        addCategoriesById: [Int!]
+        removeCategoriesById: [Int!]
+        removeAllCategories: Boolean
         addCharacteristicByIds: [Int!]
         removeCharacteristicByIds: [Int!]
         removeAllCharacteristics: Boolean
