@@ -1,6 +1,18 @@
 import {Box, Chip, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import React from "react";
 
+/**
+ * Обработчик изменения значения в селекторе.
+ *
+ * @param {object} event - Событие изменения значения в селекторе.
+ * @param {function} setSelectedValues - Функция для обновления состояния выбранных значений в селекторе.
+ * @returns {void}
+ */
+export function handleSelectorChange(event, setSelectedValues) {
+    const { value } = event.target;
+    setSelectedValues(value);
+}
+
 export default function SelectInput(props){
 
     return (

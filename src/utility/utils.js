@@ -6,7 +6,7 @@
  * @param {Object} obj - Объект, с которым нужно сравнивать значения
  * @returns {Object} - Новый объект, содержащий только нужные для запроса cвойства
  */
-export function filterValuesForUpdate(values, obj, integerKeys) {
+export function filterValuesForUpdate(values, obj) {
     const result = {};
     for (const key in values) {
         const value = values[key];

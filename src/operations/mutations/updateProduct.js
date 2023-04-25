@@ -10,12 +10,8 @@ export const UPDATE_PRODUCT = gql`
             $addImages: [Upload!]
             $removeImagesById: [Int!]
             $deleteAllImages: Boolean
-            $addCategoriesById: [Int!]
-            $removeCategoriesById: [Int!]
-            $removeAllCategories: Boolean
-            $addCharacteristicByIds: [Int!]
-            $removeCharacteristicByIds: [Int!]
-            $removeAllCharacteristics: Boolean
+            $setCategoriesById: [Int!]
+            $setCharacteristicsById: [Int!]
     ) {
         updateProduct(
             id: $id
@@ -26,12 +22,8 @@ export const UPDATE_PRODUCT = gql`
             addImages: $addImages
             removeImagesById: $removeImagesById
             deleteAllImages: $deleteAllImages
-            addCategoriesById: $addCategoriesById
-            removeCategoriesById: $removeCategoriesById
-            removeAllCategories: $removeAllCategories
-            addCharacteristicByIds: $addCharacteristicByIds
-            removeCharacteristicByIds: $removeCharacteristicByIds
-            removeAllCharacteristics: $removeAllCharacteristics
+            setCategoriesById: $setCategoriesById
+            setCharacteristicsById: $setCharacteristicsById
         ) {
             status
             errors {
