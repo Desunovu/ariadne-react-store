@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "apollo": "^2.11.1"
+    "apollo": "^2.11.1",
+    "prettier": "2.8.7"
   }
 }
