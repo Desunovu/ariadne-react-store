@@ -2,7 +2,8 @@ from ariadne import convert_kwargs_to_snake_case
 
 from api import app, db
 from api.extras import token_required, create_result, Roles, Errors
-from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, remove_product_categories, add_product_characteristics, remove_product_characteristics
+from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_characteristics, \
+    remove_product_characteristics, set_product_categories
 from api.models import Product, User, Category, Characteristic, ProductCharacteristic
 
 
@@ -25,7 +26,7 @@ def resolve_add_product(_obj, _info, **kwargs):
 
     # Добавление категорий
     if "categoryIds" in kwargs:
-        status = add_product_categories(category_ids=kwargs.get("categoryIds"), product_id=product.id)
+        status = set_product_categories(category_ids=kwargs.get("categoryIds"), product_id=product.id)
         if not status:
             errors.append(Errors.CATEGORIES_NOT_SET)
 
@@ -71,18 +72,10 @@ def resolve_update_product(_obj, _info, **kwargs):
             errors.append(Errors.OBJECT_NOT_FOUND)
 
     # Добавление/удаление категорий
-    if "addCategoriesById" in kwargs:
-        status = add_product_categories(category_ids=kwargs.get("addCategoriesById"), product_id=product.id)
+    if "setCategoriesById" in kwargs:
+        status = set_product_categories(category_ids=kwargs.get("setCategoriesById"), product_id=product.id)
         if not status:
             errors.append(Errors.CATEGORIES_NOT_SET)
-    if "removeCategoriesById" in kwargs:
-        status = remove_product_categories(category_ids=kwargs.get("removeCategoriesById"), product_id=product.id)
-        if not status:
-            errors.append(Errors.CATEGORIES_NOT_REMOVED)
-    if "removeAllCategories" in kwargs:
-        status = remove_product_categories(product_id=product.id, remove_all=True)
-        if not status:
-            errors.append(Errors.CATEGORIES_NOT_REMOVED)
 
     # Добавление/удаление характеристик
     if "addCharacteristicByIds" in kwargs:
@@ -106,10 +99,10 @@ def resolve_update_product(_obj, _info, **kwargs):
 @token_required(allowed_roles=[Roles.ADMIN])
 @convert_kwargs_to_snake_case
 def resolve_set_product_characteristic_value(_obj, _info, **kwargs):
-    query_result = db.session.query(Product, ProductCharacteristic)\
-        .join(ProductCharacteristic, ProductCharacteristic.product_id == Product.id)\
-        .filter(Product.id == kwargs["product_id"])\
-        .filter(ProductCharacteristic.characteristic_id == kwargs["characteristic_id"])\
+    query_result = db.session.query(Product, ProductCharacteristic) \
+        .join(ProductCharacteristic, ProductCharacteristic.product_id == Product.id) \
+        .filter(Product.id == kwargs["product_id"]) \
+        .filter(ProductCharacteristic.characteristic_id == kwargs["characteristic_id"]) \
         .first()
 
     if not query_result:
