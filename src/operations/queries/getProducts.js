@@ -10,30 +10,18 @@ export const GET_PRODUCTS = gql`
             sort: $sort
         ){
             status
-            errors {
-                message
-            }
-            products {
-                id
-                name
-                price
-                amount
-                reserved
-                description
-                categories {
-                    id
-                    name
-                }
-                images {
-                    url
-                }
-                reviews {
-                    text
-                }
-                characteristics {
-                    characteristicName
-                    value
-                }
+            errors{ message }
+            products{
+                      id
+                      name
+                      price
+                      amount
+                      reserved
+                      description
+                      categories{name}
+                      images{url}
+                      reviews{text}
+                      characteristics{characteristicName, value}
             }
         }
     }

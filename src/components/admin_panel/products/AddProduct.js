@@ -1,5 +1,5 @@
 import {Button, Container, Stack, TextField} from "@mui/material";
-import SelectInput, {handleSelectorChange} from "../SelectInput";
+import SelectInput from "../SelectInput";
 import ErrorsHandler from "../../ErrorsHandler";
 import React, {useState} from "react";
 import {useMutation, useQuery} from "@apollo/react-hooks";
@@ -58,6 +58,16 @@ export default function AddProduct(){
         console.log("add product callback hit")
     }
 
+    function handleCategoriesChange(event) {
+        const { value } = event.target;
+        setSelectedCategories(value);
+    }
+
+    function handleCharacteristicChange(event) {
+        const { value } = event.target;
+        setSelectedCharacteristics(value);
+    }
+
     // Переменные формы
     const { onChange, onSubmit, values } = useForm(addProductCallback, {
         name: "Новый товар",
@@ -98,18 +108,10 @@ export default function AddProduct(){
                     name="description"
                     onChange={onChange}
                 />
-                <SelectInput
-                    text="Категории"
-                    selected={selectedCategories}
-                    handleChange={(event) => handleSelectorChange(event, setSelectedCategories)}
-                    items={categories}
-                />
-                <SelectInput
-                    text="Характеристики"
-                    selected={selectedCharacteristics}
-                    handleChange={(event) => handleSelectorChange(event, setSelectedCharacteristics)}
-                    items={characteristics}
-                />
+                <SelectInput text="Категории" selected={selectedCategories} handleChange={handleCategoriesChange}
+                             items={categories}/>
+                <SelectInput text="Характеристики" selected={selectedCharacteristics}
+                             handleChange={handleCharacteristicChange} items={characteristics}/>
             </Stack>
             <ErrorsHandler apolloError={productError} errors={errors}/>
             <Button variant="contained" onClick={onSubmit}>Добавить товар</Button>
