@@ -1,5 +1,5 @@
 import {Button, Container, Stack, TextField} from "@mui/material";
-import SelectInput from "../SelectInput";
+import SelectInput, {handleSelectorChange} from "../SelectInput";
 import ErrorsHandler from "../../ErrorsHandler";
 import React, {useState} from "react";
 import {useMutation, useQuery} from "@apollo/react-hooks";
@@ -11,9 +11,9 @@ import {useForm} from "../../../utility/hooks";
 export default function AddProduct(){
     const errors = [];
     const [categories, setCategories] = useState([]);
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
-    const [selectedCharacteristics, setSelectedCharacteristics] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedCharacteristicIds, setSelectedCharacteristicIds] = useState([]);
 
     // Получение категорий
     const {error: categoriesError} = useQuery(
@@ -51,21 +51,11 @@ export default function AddProduct(){
                 price: parseInt(values.price),
                 amount: parseInt(values.amount),
                 description: values.description,
-                categoryIds: Array.from(selectedCategories, category => category.id),
-                characteristicIds: Array.from(selectedCharacteristics, characteristic => characteristic.id)
+                categoryIds: selectedCategoryIds,
+                characteristicIds: selectedCharacteristicIds
             }
         });
         console.log("add product callback hit")
-    }
-
-    function handleCategoriesChange(event) {
-        const { value } = event.target;
-        setSelectedCategories(value);
-    }
-
-    function handleCharacteristicChange(event) {
-        const { value } = event.target;
-        setSelectedCharacteristics(value);
     }
 
     // Переменные формы
@@ -108,10 +98,18 @@ export default function AddProduct(){
                     name="description"
                     onChange={onChange}
                 />
-                <SelectInput text="Категории" selected={selectedCategories} handleChange={handleCategoriesChange}
-                             items={categories}/>
-                <SelectInput text="Характеристики" selected={selectedCharacteristics}
-                             handleChange={handleCharacteristicChange} items={characteristics}/>
+                <SelectInput
+                    text="Категории"
+                    selected={selectedCategoryIds}
+                    handleChange={(event) => handleSelectorChange(event, setSelectedCategoryIds)}
+                    items={categories}
+                />
+                <SelectInput
+                    text="Характеристики"
+                    selected={selectedCharacteristicIds}
+                    handleChange={(event) => handleSelectorChange(event, setSelectedCharacteristicIds)}
+                    items={characteristics}
+                />
             </Stack>
             <ErrorsHandler apolloError={productError} errors={errors}/>
             <Button variant="contained" onClick={onSubmit}>Добавить товар</Button>

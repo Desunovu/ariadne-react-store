@@ -1,14 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import {Alert, Box, Button, Container, Stack, TextField} from "@mui/material";
 import ErrorsHandler from "../../ErrorsHandler";
-import {useMutation} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {UPDATE_PRODUCT} from "../../../operations/mutations/updateProduct";
 import {useForm} from "../../../utility/hooks";
-import {filterValuesForUpdate} from "../../../utility/utils";
+import {prepareValuesForProductUpdate} from "../../../utility/utils";
+import SelectInput, {handleSelectorChange} from "../SelectInput";
+import {GET_CATEGORIES} from "../../../operations/queries/getCategories";
+import {GET_CHARACTERISTICS} from "../../../operations/queries/getCharacteristics";
 
 export default function UpdateProduct(props) {
     const {product} = props;
     const errors = [];
+    const [categories, setCategories] = useState([]);
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState(product.categories.map((category) => category.id));
+    const [characteristics, setCharacteristics] = useState([]);
+    const [selectedCharacteristicIds, setSelectedCharacteristicIds] = useState([]);
 
     const {onChange, onSubmit, values} = useForm(updateProductCallback, {
         id: product.id,
@@ -19,13 +26,28 @@ export default function UpdateProduct(props) {
         addImages: [],
         removeImagesById: [],
         deleteAllImages: false,
-        addCategoriesById: [],
-        removeCategoriesById: [],
         removeAllCategories: false,
-        addCharacteristicByIds: [],
-        removeCharacteristicByIds: [],
         removeAllCharacteristics: false
     })
+
+    // Получение категорий
+    const {error: categoriesError} = useQuery(
+        GET_CATEGORIES, {
+            onCompleted: (data) => {
+                setCategories(data.getCategories.categories);
+                errors.push(data.getCategories.errors)
+            }
+        }
+    );
+
+    // Получение характеристик
+    const {error: characteristicsError} = useQuery(
+        GET_CHARACTERISTICS, {
+            onCompleted: (data) => {
+                setCharacteristics(data.getCharacteristics);
+            }
+        }
+    );
 
     const [updateProduct, { error: apolloError }] = useMutation(
       UPDATE_PRODUCT,
@@ -37,12 +59,15 @@ export default function UpdateProduct(props) {
     );
 
     function updateProductCallback() {
-      const variables = filterValuesForUpdate(values, product);
-
-
-      updateProduct({
-        variables: variables
-      });
+        // TODO Рассчитать списки ид категорий и характеристик [удаление, добавление]
+        updateProduct({
+            variables: prepareValuesForProductUpdate(
+                values,
+                selectedCategoryIds,
+                selectedCharacteristicIds,
+                product
+            )
+        });
     }
 
     // TODO ID, редактирование характеристик и категорий, кнопка и запрос на update
@@ -81,6 +106,11 @@ export default function UpdateProduct(props) {
                 name="description"
                 onChange={onChange}
               />
+              <SelectInput
+                  text="Категории"
+                  selected={selectedCategoryIds}
+                  handleChange={(event)  => handleSelectorChange(event, setSelectedCategoryIds)}
+                  items={categories}/>
             </Stack>
             <ErrorsHandler apolloError={apolloError} errors={errors} />
             <Button variant="contained" onClick={onSubmit}>
