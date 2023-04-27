@@ -10,16 +10,25 @@ export const GET_PRODUCT = gql`
             status
             errors{ message }
             product{
-                      id
-                      name
-                      price
-                      amount
-                      reserved
-                      description
-                      categories{name}
-                      images{url}
-                      reviews{text}
-                      characteristics{characteristicName, value}
+                id
+                name
+                price
+                amount
+                reserved
+                description
+                categories{
+                    id
+                    name
+                }
+                images{url}
+                reviews{
+                    userId
+                    text
+                }
+                characteristics{
+                    characteristicName
+                    value
+                }
             }
         }
     }
