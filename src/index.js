@@ -4,11 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import client from "./apolloClient";
-import {ApolloProvider} from "@apollo/client";
-import {BrowserRouter} from "react-router-dom";
-import {AuthProvider} from "./context/authContext";
-import {DevSupport} from "@react-buddy/ide-toolbox";
-import {ComponentPreviews, useInitial} from "./dev";
+import { ApolloProvider } from "@apollo/client";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/authContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,15 +14,12 @@ root.render(
         <ApolloProvider client={client}>
             <BrowserRouter>
                 <React.StrictMode>
-                    <DevSupport ComponentPreviews={ComponentPreviews}
-                                useInitialHook={useInitial}
-                    >
-                        <App/>
-                    </DevSupport>
+                    <App />
                 </React.StrictMode>
             </BrowserRouter>
         </ApolloProvider>
     </AuthProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
