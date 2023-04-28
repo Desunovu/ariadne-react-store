@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Container, Grid} from "@mui/material";
 import {useQuery} from "@apollo/react-hooks";
-import ProductElement from "./ProductElement";
+import ProductSimpleCard from "../product/ProductSimpleCard";
 import {GET_PRODUCTS} from "../../operations/queries/getProducts";
 import ErrorsHandler from "../ErrorsHandler";
 
@@ -24,7 +24,7 @@ function ProductsGrid(){
             <ErrorsHandler errors={errors} apolloError={error}/>
             <Grid container spacing={5}>
                 {products.map((product) => (
-                    <ProductElement product={product}/>
+                    <ProductSimpleCard product={product}/>
                 ))}
             </Grid>
         </Container>

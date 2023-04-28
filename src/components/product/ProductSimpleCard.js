@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {Link} from "react-router-dom";
 
-function ProductElement(props){
+function ProductSimpleCard(props){
     const { product } = props;
 
     return (
@@ -41,4 +41,4 @@ function ProductElement(props){
     )
 }
 
-export default ProductElement;
+export default ProductSimpleCard;
