@@ -1,13 +1,23 @@
 import React, { useContext } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Button,
-  } from "@mui/material";
+import { AppBar, Box, Toolbar, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { StoreTwoTone, ShoppingCartTwoTone } from "@mui/icons-material";
+import { makeStyles } from "@mui/material";
+
+const navbarButtonStyle = {
+  color: "white"
+};
+
+const navbarAdminButtonStyle = {
+  color: "red",
+  marginLeft: "20px"
+};
+
+const userButtonsBoxStyle = {
+  flexGrow: 1,
+  textAlign: "right",
+};
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -29,71 +39,47 @@ function Navbar() {
       >
         <Toolbar>
           {/*Заголовок магазина*/}
-          <Button
-            component={Link}
-            to={"/"}
-            sx={{
-              textDecoration: "none",
-              color: "white",
-            }}
-          >
+          <Button component={Link} to={"/"} sx={navbarButtonStyle}>
             <StoreTwoTone />
             D3$uN0Vu STORE
           </Button>
           {/*Кнопка админ-панели*/}
           {document.location.pathname !== "/admin" && user && (
             <Button
+              component={Link}
               to="/admin"
-              sx={{
-                textDecoration: "none",
-                color: "white",
-                marginLeft: "20px",
-              }}
-            >
+              sx={navbarAdminButtonStyle}>
               Панель администратора
             </Button>
           )}
           {/*Кнопки пользователя, входа, выхода, регистрации*/}
-          <Box alignItems="right" sx={{ flexGrow: 1, textAlign: "right" }}>
+          <Box alignItems="right" sx={userButtonsBoxStyle}>
             {user ? (
               <div>
                 {/*Аватарка*/}
                 {/*Корзина*/}
                 <Button
                   component={Link}
-                  to={"/"}
-                  sx={{ textDecoration: "none", color: "white" }}
+                  to="/"
+                  sx={navbarButtonStyle}
                   LinkComponent={"link"}
                 >
                   <ShoppingCartTwoTone />
                   Корзина
                 </Button>
                 {/*Кнопка выхода*/}
-                <Button
-                  style={{ textDecoration: "none", color: "white" }}
-                  onClick={onLogout}
-                >
+                <Button sx={navbarButtonStyle} onClick={onLogout}>
                   Выйти
                 </Button>
               </div>
             ) : (
               <div>
-                <Link
-                  to="/login"
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                    marginRight: "10px",
-                  }}
-                >
+                <Button component={Link} to="/login" sx={navbarButtonStyle}>
                   Войти
-                </Link>
-                <Link
-                  to="/register"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
+                </Button>
+                <Button component={Link} to="/register" sx={navbarButtonStyle}>
                   Зарегистироваться
-                </Link>
+                </Button>
               </div>
             )}
           </Box>
