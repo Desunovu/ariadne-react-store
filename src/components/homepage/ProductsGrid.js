@@ -5,7 +5,7 @@ import ProductElement from "./ProductElement";
 import {GET_PRODUCTS} from "../../operations/queries/getProducts";
 import ErrorsHandler from "../ErrorsHandler";
 
-function GetProductsMenu(){
+function ProductsGrid(){
     const [products, setProducts] = useState([]);
     const [errors, setErrors] = useState([]);
 
@@ -32,4 +32,4 @@ function GetProductsMenu(){
 
 }
 
-export default GetProductsMenu;
+export default ProductsGrid;

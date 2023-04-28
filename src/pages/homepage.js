@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import {AuthContext} from "../context/authContext";
-import GetProductsMenu from "../components/homepage/GetProductsMenu";
+import ProductsGrid from "../components/homepage/ProductsGrid";
 
 function Homepage() {
     const { user } = useContext(AuthContext);
@@ -11,7 +11,7 @@ function Homepage() {
             { user ?
                 <div>
                     <p>Вы успешно вошли в систему. Контекст id: {user.id}</p>
-                    <GetProductsMenu/>
+                    <ProductsGrid/>
                 </div>
                 :
                 <div>
