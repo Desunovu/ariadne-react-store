@@ -20,7 +20,7 @@ function ProductMenu() {
             <ToggleButtonGroup value={selectedAction}>
                 <ToggleButton  value="get" onClick={handleChange}>Список товаров</ToggleButton>
                 <ToggleButton  value="add" onClick={handleChange}>Добавить товар</ToggleButton>
-                <ToggleButton  value="update" onClick={handleChange}>Редактировать товар</ToggleButton>
+                <ToggleButton  value="update" sx={{ pointerEvents: "none" }}>Редактировать товар</ToggleButton>
             </ToggleButtonGroup>
 
             {(() => {

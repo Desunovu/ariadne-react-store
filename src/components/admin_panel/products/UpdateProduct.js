@@ -59,7 +59,6 @@ export default function UpdateProduct(props) {
     );
 
     function updateProductCallback() {
-        // TODO Рассчитать списки ид категорий и характеристик [удаление, добавление]
         updateProduct({
             variables: prepareValuesForProductUpdate(
                 values,
@@ -70,14 +69,13 @@ export default function UpdateProduct(props) {
         });
     }
 
-    // TODO ID, редактирование характеристик и категорий, кнопка и запрос на update
     return (
       <Container spacing={2} maxWidth="md">
         <h3> Редактирование товара </h3>
-        {!product.id && (
+        {!product && (
           <Alert severity="warning">Товар не выбран в списке товаров</Alert>
         )}
-        {product.id && (
+        {product && (
           <Box>
             <Stack spacing={2} paddingBottom={2}>
               <TextField
