@@ -3,7 +3,6 @@ import { AppBar, Box, Toolbar, Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { StoreTwoTone, ShoppingCartTwoTone } from "@mui/icons-material";
-import { makeStyles } from "@mui/material";
 
 const navbarButtonStyle = {
   color: "white"
@@ -43,24 +42,24 @@ function Navbar() {
             <StoreTwoTone />
             D3$uN0Vu STORE
           </Button>
-          {/*Кнопка админ-панели*/}
-          {document.location.pathname !== "/admin" && user && (
-            <Button
-              component={Link}
-              to="/admin"
-              sx={navbarAdminButtonStyle}>
-              Панель администратора
-            </Button>
-          )}
           {/*Кнопки пользователя, входа, выхода, регистрации*/}
           <Box alignItems="right" sx={userButtonsBoxStyle}>
             {user ? (
               <div>
+                {/*Кнопка админ-панели*/}
+                {document.location.pathname !== "/admin" && user && (
+                    <Button
+                        component={Link}
+                        to="/admin"
+                        sx={navbarAdminButtonStyle}>
+                      Панель администратора
+                    </Button>
+                )}
                 {/*Аватарка*/}
                 {/*Корзина*/}
                 <Button
                   component={Link}
-                  to="/"
+                  to="/cart"
                   sx={navbarButtonStyle}
                   LinkComponent={"link"}
                 >

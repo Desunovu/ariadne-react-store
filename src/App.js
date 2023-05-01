@@ -8,6 +8,7 @@ import Navbar from "./components/navbar";
 import Admin from "./pages/admin";
 import ProductPage from "./pages/product";
 import {Toolbar} from "@mui/material";
+import Cart from "./pages/cart";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path=":id" element={<ProductPage/>}/>
                 </Route>
                 <Route path="/admin" element={<Admin/>}/>
+                <Route path="/cart" element={<Cart/>}/>
             </Routes>
     </div>
   );

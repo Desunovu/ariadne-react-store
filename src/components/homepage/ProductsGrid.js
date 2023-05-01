@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import {Container, Grid} from "@mui/material";
-import {useQuery} from "@apollo/react-hooks";
-import ProductSimpleCard from "../product/ProductSimpleCard";
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import ProductSimpleCard from "../ProductSimpleCard";
 import {GET_PRODUCTS} from "../../operations/queries/getProducts";
 import ErrorsHandler from "../ErrorsHandler";
+import {ADD_PRODUCT_TO_CART} from "../../operations/mutations/addProductToCart";
+import {REMOVE_PRODUCT_FROM_CART} from "../../operations/mutations/removeProductFromCart";
 
 function ProductsGrid(){
     const [products, setProducts] = useState([]);
     const [errors, setErrors] = useState([]);
-
+    const [addProductToCart] = useMutation(ADD_PRODUCT_TO_CART);
+    const [removeProductFromCart] = useMutation(REMOVE_PRODUCT_FROM_CART);
     const { error } = useQuery(
         GET_PRODUCTS, {
             onCompleted: (data) => {
@@ -24,7 +27,7 @@ function ProductsGrid(){
             <ErrorsHandler errors={errors} apolloError={error}/>
             <Grid container spacing={5}>
                 {products.map((product) => (
-                    <ProductSimpleCard product={product}/>
+                    <ProductSimpleCard product={product} add={addProductToCart} remove={removeProductFromCart}/>
                 ))}
             </Grid>
         </Container>

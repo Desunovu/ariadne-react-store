@@ -18,22 +18,12 @@ export const GET_PRODUCTS = gql`
                 name
                 price
                 amount
-                reserved
                 description
-                categories {
-                    id
-                    name
-                }
                 images {
                     url
                 }
-                reviews {
-                    text
-                }
-                characteristics {
-                    characteristicName
-                    value
-                }
+                categories{id, name}
+                characteristics{characteristicName, value}
             }
         }
     }
