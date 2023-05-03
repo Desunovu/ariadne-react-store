@@ -1,7 +1,8 @@
 version: "3.8"
 services:
-  api:
-    container_name: shop-api
+  store-backend:
+    image: store-backend:latest
+    container_name: store-backend
     restart: always
     build:
       context: ./
