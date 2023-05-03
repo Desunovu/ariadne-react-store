@@ -14,6 +14,7 @@ function ProductsGrid(){
     const [removeProductFromCart] = useMutation(REMOVE_PRODUCT_FROM_CART);
     const { error } = useQuery(
         GET_PRODUCTS, {
+            fetchPolicy: "cache-and-network",
             onCompleted: (data) => {
                 setErrors(data.getProducts.errors)
                 setProducts(data.getProducts.products)

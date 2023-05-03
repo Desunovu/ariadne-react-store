@@ -5,12 +5,12 @@ import { AuthContext } from "../context/authContext";
 import { StoreTwoTone, ShoppingCartTwoTone } from "@mui/icons-material";
 
 const navbarButtonStyle = {
-  color: "white"
+  color: "white",
 };
 
 const navbarAdminButtonStyle = {
   color: "red",
-  marginLeft: "20px"
+  marginLeft: "20px",
 };
 
 const userButtonsBoxStyle = {
@@ -48,14 +48,24 @@ function Navbar() {
               <div>
                 {/*Кнопка админ-панели*/}
                 {document.location.pathname !== "/admin" && user && (
-                    <Button
-                        component={Link}
-                        to="/admin"
-                        sx={navbarAdminButtonStyle}>
-                      Панель администратора
-                    </Button>
+                  <Button
+                    component={Link}
+                    to="/admin"
+                    sx={navbarAdminButtonStyle}
+                  >
+                    Панель администратора
+                  </Button>
                 )}
                 {/*Аватарка*/}
+                {/*Заказы*/}
+                <Button
+                  component={Link}
+                  to="/orders"
+                  sx={navbarButtonStyle}
+                  LinkComponent={"link"}
+                >
+                  Заказы
+                </Button>
                 {/*Корзина*/}
                 <Button
                   component={Link}

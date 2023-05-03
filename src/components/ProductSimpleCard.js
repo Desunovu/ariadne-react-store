@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import {
   Button,
   ButtonGroup,
@@ -7,7 +7,7 @@ import {
   CardActions,
   CardContent,
   Grid,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,9 @@ const CardActionAreaStyle = {
 };
 
 const CardActionsStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
   flexBasis: "20%",
 };
 
@@ -39,30 +42,41 @@ const ButtonStyle = {
 
 function ProductSimpleCard(props) {
   const { product, amount, add, remove } = props;
-  const [stateAmount, setStateAmount] = useState(amount)
+  const [stateAmount, setStateAmount] = useState(amount);
 
   const onButtonClick = useCallback(() => {
+    if (product.amount <= amount) {
+      return;
+    }
+
     add({
       variables: {
         id: product.id,
         amount: 1,
       },
       onCompleted: (data) => {
-        console.log(data)
-        if (data.addProductToCart.status) { setStateAmount(data.addProductToCart.cartline.amount) }
+        console.log(data);
+        if (data.addProductToCart.status) {
+          setStateAmount(data.addProductToCart.cartline.amount);
+        }
       },
     });
   }, []);
 
-
   const onButtonClick_1 = useCallback(() => {
+    if (amount <= 0) {
+      return;
+    }
+
     remove({
       variables: {
         id: product.id,
         amount: 1,
       },
       onCompleted: (data) => {
-        if (data.removeProductFromCart.status) { setStateAmount(data.removeProductFromCart.cartline.amount) }
+        if (data.removeProductFromCart.status) {
+          setStateAmount(data.removeProductFromCart.cartline.amount);
+        }
       },
     });
     console.log("Нажато убавить");
@@ -86,8 +100,17 @@ function ProductSimpleCard(props) {
           </CardContent>
         </CardActionArea>
         <CardActions sx={CardActionsStyle}>
-          {!stateAmount && <Button sx={ButtonStyle} onClick={onButtonClick}>В корзину</Button>}
-          {stateAmount && (
+          {!stateAmount && product.amount > 0 && (
+            <Button sx={ButtonStyle} onClick={onButtonClick}>
+              В корзину
+            </Button>
+          )}
+          {product.amount <= 0 && (
+            <Button disabled>
+              Товар закончился
+            </Button>
+          )}
+          {!!stateAmount && (
             <ButtonGroup sx={ButtonGroupStyle}>
               <Button onClick={onButtonClick}>+</Button>
               <Button sx={{ pointerEvents: "none" }}>{stateAmount}</Button>

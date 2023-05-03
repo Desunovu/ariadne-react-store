@@ -9,6 +9,7 @@ import Admin from "./pages/admin";
 import ProductPage from "./pages/product";
 import {Toolbar} from "@mui/material";
 import Cart from "./pages/cart";
+import Orders from "./pages/orders";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 </Route>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/cart" element={<Cart/>}/>
+                <Route path="/orders" element={<Orders/>}/>
             </Routes>
     </div>
   );
