@@ -11,11 +11,11 @@ from api.models import Order, User
 def resolve_get_orders(_obj, info, **kwargs):
     user_id = info.context.current_user.id
 
-    # Если администратор указал userId
-    if kwargs.get("userId"):
+    # Если администратор указал user_id
+    if "user_id" in kwargs:
         if info.context.current_user.role != Roles.ADMIN:
             return create_result(status=False, errors=[Errors.ACCESS_DENIED])
-        user_id = kwargs["userId"]
+        user_id = kwargs["user_id"]
         if not db.session.query(User).get(user_id):
             return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
