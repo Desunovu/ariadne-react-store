@@ -25,7 +25,9 @@ function App() {
                 </Route>
                 <Route path="/admin" element={<Admin/>}/>
                 <Route path="/cart" element={<Cart/>}/>
-                <Route path="/orders" element={<Orders/>}/>
+                <Route path="/orders" element={<Orders/>}>
+                    <Route path=":userId" element={<Orders/>}/>
+                </Route>
             </Routes>
     </div>
   );

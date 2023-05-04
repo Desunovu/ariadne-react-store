@@ -27,9 +27,6 @@ function Navbar() {
     navigate("/");
   };
 
-  console.log(localStorage.getItem("token"));
-  console.log(user);
-
   return (
     <Box sf={{ display: "flex" }}>
       <AppBar
@@ -58,12 +55,7 @@ function Navbar() {
                 )}
                 {/*Аватарка*/}
                 {/*Заказы*/}
-                <Button
-                  component={Link}
-                  to="/orders"
-                  sx={navbarButtonStyle}
-                  LinkComponent={"link"}
-                >
+                <Button sx={navbarButtonStyle} onClick={() => {navigate("/orders")}}>
                   Заказы
                 </Button>
                 {/*Корзина*/}
