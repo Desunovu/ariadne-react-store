@@ -2,26 +2,11 @@ import React from "react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { useForm } from "../utility/hooks";
-import { useLazyQuery, gql } from "@apollo/react-hooks";
+import { useLazyQuery } from "@apollo/react-hooks";
 import { TextField, Button, Container, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ErrorsHandler from "../components/ErrorsHandler";
-
-const LOGIN_USER = gql`
-    query LoginUser(
-        $email: String!
-        $password: String!
-    ) {
-        loginUser(email: $email, password: $password){
-            status
-            errors{
-                code
-                message
-            }
-            token
-        }
-    }
-`;
+import { LOGIN_USER } from "../operations/queries/loginUser";
 
 function Login() {
   const context = useContext(AuthContext);
