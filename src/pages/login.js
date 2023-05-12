@@ -24,7 +24,7 @@ function Login() {
     onCompleted: (data) => {
       setErrors(data.loginUser.errors);
       setStatus(data.loginUser.status);
-      if (status) {
+      if (data.loginUser.status) {
         context.login(data.loginUser);
         navigate("/");
       }
