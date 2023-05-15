@@ -7,6 +7,8 @@ import {GET_CATEGORIES} from "../../../operations/queries/getCategories";
 import {GET_CHARACTERISTICS} from "../../../operations/queries/getCharacteristics";
 import {ADD_PRODUCT} from "../../../operations/mutations/addProduct";
 import {useForm} from "../../../utility/hooks";
+import ImageInput from "./ImageInput";
+import ImagePreview from "./ImagePreview";
 
 export default function AddProduct(){
     const errors = [];
@@ -14,6 +16,8 @@ export default function AddProduct(){
     const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
     const [characteristics, setCharacteristics] = useState([]);
     const [selectedCharacteristicIds, setSelectedCharacteristicIds] = useState([]);
+    const [images, setImages] = useState([]);
+    const [previewUrls, setPreviewUrls] = useState([]);
 
     // Получение категорий
     const {error: categoriesError} = useQuery(
@@ -52,7 +56,8 @@ export default function AddProduct(){
                 amount: parseInt(values.amount),
                 description: values.description,
                 categoryIds: selectedCategoryIds,
-                characteristicIds: selectedCharacteristicIds
+                characteristicIds: selectedCharacteristicIds,
+                images: images,
             }
         });
         console.log("add product callback hit")
@@ -109,6 +114,16 @@ export default function AddProduct(){
                     selected={selectedCharacteristicIds}
                     handleChange={(event) => handleSelectorChange(event, setSelectedCharacteristicIds)}
                     items={characteristics}
+                />
+                <ImageInput
+                    setImages={setImages}
+                    setPreviewUrls={setPreviewUrls}
+                />
+                <ImagePreview
+                    images={images}
+                    previewUrls={previewUrls}
+                    setImages={setImages}
+                    setPreviewUrls={setPreviewUrls}
                 />
             </Stack>
             <ErrorsHandler apolloError={productError} errors={errors}/>

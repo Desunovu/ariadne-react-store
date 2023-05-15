@@ -8,6 +8,7 @@ export const ADD_PRODUCT = gql`
         $description: String!
         $categoryIds: [Int!]
         $characteristicIds: [Int!]
+        $images: [Upload!]
     ) {
         addProduct(
             name: $name,
@@ -16,20 +17,13 @@ export const ADD_PRODUCT = gql`
             description: $description,
             categoryIds: $categoryIds,
             characteristicIds: $characteristicIds
+            images: $images
         ){
             status
             errors{message}
             product {
               id
               name
-              price
-              amount
-              reserved
-              description
-              categories{name}
-              images{url}
-              reviews{text}
-              characteristics{characteristicName, value}
             }
         }
     }
