@@ -1,7 +1,8 @@
 # В resolver верхнего уровня возвращается api.models.Product
+import os
 
+from api import db, minio_client
 from api.extras import create_simple_result
-from api import db
 from api.models import Category, ProductImage, ProductCategory, Review, ProductCharacteristic, Characteristic
 
 
@@ -46,13 +47,17 @@ def resolve_product_images(product_obj, _info):
     images = db.session.query(ProductImage).filter(
         ProductImage.product_id == product_obj.id).all()
 
-    # Создание словаря согласно определению типа Image в схеме
-    return [create_simple_result(
+    # Создание результата по определению типа в gql схеме (type Image)
+    result = [create_simple_result(
         id=image.id,
         filename=image.image_name,
-        url="TEST FUNC",
+        url=minio_client.get_presigned_url(method="GET",
+                                           bucket_name=os.environ.get("PRODUCTS_BUCKET"),
+                                           object_name=image.image_name),
         isPreview=image.is_preview
     ) for image in images]
+
+    return result
 
 
 def resolve_product_reviews(product_obj, _info):
