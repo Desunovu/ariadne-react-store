@@ -19,6 +19,7 @@ type Product {
     reserved: Int
     description: String
     categories: [Category!]
+    previewImage: Image
     images: [Image!]
     reviews: [Review!]
     characteristics: [ProductCharacteristic!]
@@ -41,7 +42,6 @@ type Image {
     id: Int
     filename: String
     url: String
-    isPreview: Boolean
 }
 
 """Категория товара"""
