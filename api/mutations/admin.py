@@ -2,8 +2,9 @@ from ariadne import convert_kwargs_to_snake_case
 
 from api import app, db
 from api.extras import token_required, create_result, Roles, Errors
-from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, remove_product_categories, add_product_characteristics, remove_product_characteristics
-from api.models import Product, User, Category, Characteristic, ProductCharacteristic
+from api.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, \
+    remove_product_categories, add_product_characteristics, remove_product_characteristics
+from api.models import Product, User, Category, Characteristic, ProductCharacteristic, ProductImage
 
 
 @token_required(allowed_roles=[Roles.ADMIN])
@@ -70,6 +71,15 @@ def resolve_update_product(_obj, _info, **kwargs):
         if not status:
             errors.append(Errors.OBJECT_NOT_FOUND)
 
+    # Назначение превью по ID:
+    set_image_as_preview_by_id = kwargs.get("setImageAsPreviewById")
+    if set_image_as_preview_by_id:
+        image = db.session.query(ProductImage).get(set_image_as_preview_by_id)
+        if image and image.product_id == product.id:
+            product.preview_image_id = image.id
+        else:
+            errors.append(Errors.PREVIEW_NOT_SET)
+
     # Добавление/удаление категорий
     if "addCategoriesById" in kwargs:
         status = add_product_categories(category_ids=kwargs.get("addCategoriesById"), product_id=product.id)
@@ -100,6 +110,7 @@ def resolve_update_product(_obj, _info, **kwargs):
         if not status:
             errors.append(Errors.CHARACTERISTICS_NOT_REMOVED)
 
+    db.session.commit()
     return create_result(errors=errors, product=product)
 
 
