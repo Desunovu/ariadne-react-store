@@ -40,6 +40,7 @@ class Product(BaseMixin):
     amount = Column(Integer, nullable=False, default=0)
     reserved = Column(Integer, nullable=False, default=0)
     description = Column(String, nullable=False, default="DefaultDescription")
+    preview_image_id = Column(Integer, ForeignKey("product_images.id", ondelete="CASCADE"))
 
 
 class Category(BaseMixin):
