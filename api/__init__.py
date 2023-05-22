@@ -20,11 +20,16 @@ CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-# minio_client = Minio(app)
-minio_client = Minio(endpoint=app.config.get("MINIO_ENDPOINT"),
-                     access_key=app.config.get("MINIO_ACCESS_KEY"),
-                     secret_key=app.config.get("MINIO_SECRET_KEY"),
-                     secure=False)
+# MinIO client
+minio_client = Minio(
+    endpoint=os.environ.get("MINIO_ENDPOINT"),
+    access_key=os.environ.get("MINIO_ROOT_USER"),
+    secret_key=os.environ.get("MINIO_ROOT_PASSWORD"),
+    secure=False
+)
+product_bucket = minio_client.bucket_exists(os.environ.get("PRODUCTS_BUCKET"))
+if not product_bucket:
+    minio_client.make_bucket(os.environ.get("PRODUCTS_BUCKET"))
 
 # Подключение роутов, моделей, создание таблиц
 from api.routes import *

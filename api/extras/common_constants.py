@@ -29,7 +29,8 @@ class Errors:
     ORDER_CREATION_EXCEPTION = create_error(11, "Ошибка при переносе товара в заказ")
     WRONG_ORDER_STATUS = create_error(12, "Нельзя применить статус к заказу")
     CHARACTERISTICS_NOT_SET = create_error(13, "При задании характеристик товара произошла ошибка")
-    CHARACTERISTICS_NOT_REMOVED= create_error(14, "При удалении характеристик товара произошла ошибка")
+    CHARACTERISTICS_NOT_REMOVED = create_error(14, "При удалении характеристик товара произошла ошибка")
+    PREVIEW_NOT_SET = create_error(15, "Превью не задано. Нет изображения, либо изображение принадлежит другому товару")
 
 
 class UnauthorizedError(Exception):

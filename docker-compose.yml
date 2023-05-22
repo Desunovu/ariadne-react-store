@@ -36,18 +36,6 @@ services:
       - .env
     command: server --console-address ":9001" /data
 
-  createbuckets:
-    image: minio/mc
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
-      /usr/bin/mc mb myminio/${PRODUCTS_BUCKET};
-      /usr/bin/mc policy set public myminio/${PRODUCTS_BUCKET};
-      exit 0;
-      "
-
 volumes:
   postgres-data:
     name: postgres-data

@@ -1,8 +1,10 @@
 # В resolver верхнего уровня возвращается api.models.Product
+import os
 
+from api import app, db
 from api.extras import create_simple_result
-from api import db
 from api.models import Category, ProductImage, ProductCategory, Review, ProductCharacteristic, Characteristic
+from api.extras.resolver_utils import get_image_url
 
 
 def resolve_product_id(product_obj, _info):
@@ -41,18 +43,31 @@ def resolve_product_categories(product_obj, _info):
     ) for category in categories]
 
 
+def resolve_product_preview_image(product_obj, _info):
+    preview_image = db.session.query(ProductImage).filter(ProductImage.id == product_obj.preview_image_id).first()
+
+    if preview_image:
+        return create_simple_result(
+            id=preview_image.id,
+            filename=preview_image.image_name,
+            url=get_image_url(bucket_name=app.config.get("PRODUCTS_BUCKET"), object_name=preview_image.image_name)
+        )
+    return None
+
+
 def resolve_product_images(product_obj, _info):
     # Поиск изображений по product.id
     images = db.session.query(ProductImage).filter(
         ProductImage.product_id == product_obj.id).all()
 
-    # Создание словаря согласно определению типа Image в схеме
-    return [create_simple_result(
+    # Создание результата по определению типа в gql схеме (type Image)
+    result = [create_simple_result(
         id=image.id,
         filename=image.image_name,
-        url="TEST FUNC",
-        isPreview=image.is_preview
+        url=get_image_url(bucket_name=app.config.get("PRODUCTS_BUCKET"), object_name=image.image_name)
     ) for image in images]
+
+    return result
 
 
 def resolve_product_reviews(product_obj, _info):

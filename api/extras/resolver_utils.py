@@ -154,3 +154,10 @@ def remove_product_characteristics(product_id, characteristic_ids=None, remove_a
     except Exception:
         db.session.rollback()
         return False
+
+
+def get_image_url(bucket_name, object_name):
+    url = minio_client.get_presigned_url(method="GET",
+                                         bucket_name=bucket_name,
+                                         object_name=object_name)
+    return url
