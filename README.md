@@ -35,25 +35,25 @@ To install and run the application, follow these steps:
 
 The API provides the following mutations:
 
-- `createUser`: Register a new user.
-- `updateUser`: Update user information.
-- `addProduct`: Add a new product.
-- `updateProduct`: Update product information.
-- `setProductCharacteristicValue`: Set a value for a product characteristic.
-- `deleteProduct`: Delete a product.
-- `assignAdmin`: Assign admin role to a user.
-- `deleteUser`: Delete a user.
-- `addProductToCart`: Add a product to the shopping cart.
-- `removeProductFromCart`: Remove a product from the shopping cart.
-- `addCategory`: Create a new category.
-- `removeCategory`: Remove a category.
-- `addReview`: Leave or update a review.
-- `removeReview`: Delete a review.
-- `createOrder`: Create a new order.
-- `updateOrderStatus`: Update the status of an order.
-- `addProductToFavorites`: Add a product to favorites.
-- `createCharacteristic`: Create a new characteristic.
-- `deleteCharacteristic`: Delete a characteristic.
+1. `createUser`: Register a new user.
+2. `updateUser`: Update user information.
+3. `deleteUser`: Delete a user.
+4. `assignAdmin`: Assign admin role to a user.
+5. `addProduct`: Add a new product.
+6. `updateProduct`: Update product information.
+7. `deleteProduct`: Delete a product.
+8. `addCategory`: Create a new category.
+9. `removeCategory`: Remove a category.
+10. `addReview`: Leave or update a review.
+11. `removeReview`: Delete a review.
+12. `createOrder`: Create a new order.
+13. `updateOrderStatus`: Update the status of an order.
+14. `addProductToFavorites`: Add a product to favorites.
+15. `createCharacteristic`: Create a new characteristic.
+16. `deleteCharacteristic`: Delete a characteristic.
+17. `addProductToCart`: Add a product to the shopping cart.
+18. `removeProductFromCart`: Remove a product from the shopping cart.
+19. `setProductCharacteristicValue`: Set a value for a product characteristic.
 
 And the following queries:
 
