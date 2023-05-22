@@ -4,14 +4,23 @@ This repository contains the backend of an online store project. It provides fun
 
 ## Technologies and Tools
 
-- Programming Language: Python
-- Framework: Flask
-- ORM: SQLAlchemy
-- Database: PostgreSQL
-- File Storage: MinIO
-- API: GraphQL API
-- GraphQL Library: Ariadne
-- Containerization: Docker
+The project uses the following technologies and tools:
+
+- **Programming Language**: Python
+- **Framework**: Flask
+- **Object-Relational Mapping (ORM)**: SQLAlchemy
+- **Database**: PostgreSQL
+- **File Storage**: MinIO
+- **API**: GraphQL API
+- **GraphQL Library**: Ariadne
+- **Containerization**: Docker
+
+## Requirements
+
+To run this application, the following requirements must be met:
+
+- Python 3.10 or higher
+- Docker and Docker Compose (if running the application using Docker)
 
 ## Installation and Usage
 
