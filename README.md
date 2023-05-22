@@ -1,22 +1,69 @@
-# shop-graphql-api-example
-A simple example of an application developed on Flask. Uses PostgreSQL, SQLAlchemy, Ariadne (GraphQL), Minio file storage.
+# Online Store Backend
 
-# Features
-1. Client sign up/sign in
-2. Results of queries/mutations for Front-end
-3. Store administration (create product, category, upload images and etc)
-4. Shopping cart usage (add/remove allowed products)
-5. Products reviews
+This repository contains the backend of an online store project. It provides functionalities for managing products, orders, user authentication, and related operations.
 
-# Project structure
-Coming soon
+## Technologies and Tools
 
-# Local preview
-Coming soon
+- Programming Language: Python
+- Framework: Flask
+- ORM: SQLAlchemy
+- Database: PostgreSQL
+- File Storage: MinIO
+- API: GraphQL API
+- GraphQL Library: Ariadne
+- Containerization: Docker
 
-# GraphQL Schema
-updated 20th September 2022
+## Installation and Usage
 
-![Query](https://user-images.githubusercontent.com/25926477/191344412-e49c3f84-ed32-4097-b94f-81f89f214d29.png)
-![Mutation](https://user-images.githubusercontent.com/25926477/191344497-1529dfbb-fe68-4265-be8b-8f2a5b272a43.png)
+To install and run the application, follow these steps:
 
+1. Clone the repository: `git clone https://github.com/Desunovu/graphql-store-backend.git`.
+2. Navigate to the project directory.
+3. Edit the `.env` file, specifying the device address in the local network for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
+
+### Running with Docker
+
+4. Execute docker-compose up to launch the application, along with the required services.
+
+### Running without Docker
+
+4. Install the dependencies: `pip install -r requirements.txt`.
+5. Set the `FLASK_APP` environment variable to "api".
+6. Run the application: `flask run`.
+
+## GraphQL API
+
+The API provides the following mutations:
+
+- `createUser`: Register a new user.
+- `updateUser`: Update user information.
+- `addProduct`: Add a new product.
+- `updateProduct`: Update product information.
+- `setProductCharacteristicValue`: Set a value for a product characteristic.
+- `deleteProduct`: Delete a product.
+- `assignAdmin`: Assign admin role to a user.
+- `deleteUser`: Delete a user.
+- `addProductToCart`: Add a product to the shopping cart.
+- `removeProductFromCart`: Remove a product from the shopping cart.
+- `addCategory`: Create a new category.
+- `removeCategory`: Remove a category.
+- `addReview`: Leave or update a review.
+- `removeReview`: Delete a review.
+- `createOrder`: Create a new order.
+- `updateOrderStatus`: Update the status of an order.
+- `addProductToFavorites`: Add a product to favorites.
+- `createCharacteristic`: Create a new characteristic.
+- `deleteCharacteristic`: Delete a characteristic.
+
+And the following queries:
+
+- `loginUser`: Obtain an authorization token.
+- `getUser`: Get user information.
+- `getUsers`: Get a list of users.
+- `getProduct`: Get product information.
+- `getProducts`: Get a list of products.
+- `getCart`: Get cart information.
+- `getCategories`: Get a list of categories.
+- `getOrders`: Get a list of orders.
+- `getFavoriteProducts`: Get a list of favorite products.
+- `getCharacteristics`: Get a list of available characteristics.
