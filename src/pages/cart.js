@@ -1,8 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { GET_CART } from "../operations/queries/getCart";
-import { ADD_PRODUCT_TO_CART } from "../operations/mutations/addProductToCart";
-import { REMOVE_PRODUCT_FROM_CART } from "../operations/mutations/removeProductFromCart";
 import { CREATE_ORDER } from "../operations/mutations/createOrder";
 import {
   Alert,
@@ -49,8 +47,6 @@ export default function Cart() {
       setCartTotal(data.getCart.cartTotal);
     },
   });
-  const [addProductToCart] = useMutation(ADD_PRODUCT_TO_CART);
-  const [removeProductFromCart] = useMutation(REMOVE_PRODUCT_FROM_CART);
   const [createOrder, { loading }] = useMutation(CREATE_ORDER);
 
   const onButtonClick = useCallback(() => {
@@ -77,8 +73,6 @@ export default function Cart() {
                 key={cartLine.product.id}
                 product={cartLine.product}
                 amount={cartLine.amount}
-                add={addProductToCart}
-                remove={removeProductFromCart}
               />
             ))}
         </Grid>

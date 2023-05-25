@@ -1,8 +1,7 @@
 import React from "react";
 import { Alert } from "@mui/material";
 
-export default function ErrorsHandler(props) {
-  const { errors, apolloError } = props;
+export default function ErrorsHandler({ errors, apolloError }) {
   return (
     <>
       {apolloError && apolloError.networkError && (
@@ -10,7 +9,8 @@ export default function ErrorsHandler(props) {
           Сетевая ошибка: "{apolloError.networkError.message}"
         </Alert>
       )}
-      {apolloError && apolloError.graphQLErrors &&
+      {apolloError &&
+        apolloError.graphQLErrors &&
         apolloError.graphQLErrors.map(({ message }) => (
           <Alert severity="error">Ошибка: "{message}"</Alert>
         ))}

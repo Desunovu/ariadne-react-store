@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import {
-  Button,
-  ButtonGroup,
+  Box,
   Card,
   CardActionArea,
   CardActions,
-  CardContent,
+  CardMedia,
   Grid,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import {AddToCartButton} from "./AddToCartButton";
 
 const CardActionAreaStyle = {
   flexBasis: "80%",
@@ -30,57 +30,7 @@ const CardStyle = {
   height: "200px",
 };
 
-const ButtonGroupStyle = {
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "flex-start",
-};
-
-const ButtonStyle = {
-  whiteSpace: "nowrap",
-};
-
-function ProductSimpleCard(props) {
-  const { product, amount, add, remove } = props;
-  const [stateAmount, setStateAmount] = useState(amount);
-
-  const onButtonClick = useCallback(() => {
-    if (product.amount <= amount) {
-      return;
-    }
-
-    add({
-      variables: {
-        id: product.id,
-        amount: 1,
-      },
-      onCompleted: (data) => {
-        console.log(data);
-        if (data.addProductToCart.status) {
-          setStateAmount(data.addProductToCart.cartline.amount);
-        }
-      },
-    });
-  }, []);
-
-  const onButtonClick_1 = useCallback(() => {
-    if (amount <= 0) {
-      return;
-    }
-
-    remove({
-      variables: {
-        id: product.id,
-        amount: 1,
-      },
-      onCompleted: (data) => {
-        if (data.removeProductFromCart.status) {
-          setStateAmount(data.removeProductFromCart.cartline.amount);
-        }
-      },
-    });
-    console.log("Нажато убавить");
-  }, []);
+function ProductSimpleCard({ product, amount }) {
 
   return (
     <Grid item key={product.id} md={6}>
@@ -90,33 +40,29 @@ function ProductSimpleCard(props) {
           to={"/product/" + product.id}
           sx={CardActionAreaStyle}
         >
-          <CardContent>
-            <Typography variant="h5">{product.name}</Typography>
-            <b>Количество:</b> {product.amount}
-            <br />
-            <b>Стоимость:</b> {product.price} ₽<br />
-            <b>Описание:</b> {product.description}
-            <br />
-          </CardContent>
+          {product.previewImage && (
+            <CardMedia
+              sx={{ height: "100%", width: "100%" }}
+              component="img"
+              image={product.previewImage.url}
+              alt={product.previewImage.filename}
+            />
+          )}
         </CardActionArea>
         <CardActions sx={CardActionsStyle}>
-          {!stateAmount && product.amount > 0 && (
-            <Button sx={ButtonStyle} onClick={onButtonClick}>
-              В корзину
-            </Button>
-          )}
-          {product.amount <= 0 && (
-            <Button disabled>
-              Товар закончился
-            </Button>
-          )}
-          {!!stateAmount && (
-            <ButtonGroup sx={ButtonGroupStyle}>
-              <Button onClick={onButtonClick}>+</Button>
-              <Button sx={{ pointerEvents: "none" }}>{stateAmount}</Button>
-              <Button onClick={onButtonClick_1}>-</Button>
-            </ButtonGroup>
-          )}
+          <Box
+            sx={{
+              flex: "1 0 auto",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "start",
+            }}
+          >
+            <Typography variant="h5">{product.name}</Typography>
+            <Typography variant="h6">{product.price} ₽</Typography>
+          </Box>
+          <AddToCartButton product={product} amount={amount} />
         </CardActions>
       </Card>
     </Grid>

@@ -20,7 +20,11 @@ export const GET_PRODUCT = gql`
                     id
                     name
                 }
-                images{url}
+                images{
+                  id
+                  filename
+                  url
+                }
                 reviews{
                     userId
                     text

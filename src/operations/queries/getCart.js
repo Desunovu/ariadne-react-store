@@ -16,8 +16,12 @@ export const GET_CART = gql`
                     amount
                     price
                     description
-                    images {
-                        url
+                    categories {
+                      name
+                    }
+                    previewImage {
+                      filename
+                      url
                     }
                 }
                 amount

@@ -10,7 +10,10 @@ export const ADD_PRODUCT_TO_CART = gql`
             amount: $amount
         ) {
             status
-            errors{message}
+            errors { 
+              code
+              message
+            }
             cartline {
                 product {
                     id
