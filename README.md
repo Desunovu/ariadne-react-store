@@ -1,6 +1,8 @@
 # Online Store Backend
 
-This repository contains the backend of an online store project. It provides functionalities for managing products, orders, user authentication, and related operations.
+This repository contains the backend application of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
+
+The frontend web client is available at the following link: [react-store-frontend](https://github.com/Desunovu/react-store-frontend)
 
 ## Technologies and Tools
 
