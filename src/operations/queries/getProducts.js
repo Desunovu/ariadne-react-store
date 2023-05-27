@@ -20,6 +20,7 @@ export const GET_PRODUCTS = gql`
         amount
         description
         categories {
+          id
           name
         }
         previewImage {

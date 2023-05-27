@@ -59,7 +59,7 @@ export default function ProductFullCard(props) {
           <img
             src={selectedImageUrl}
             alt="Превью товара"
-            style={{ height: "100%", objectFit: "fill" }}
+            style={{ width: "-webkit-fill-available", objectFit: "contain" }}
           />
         </Box>
       </Box>

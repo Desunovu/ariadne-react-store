@@ -12,7 +12,7 @@ function Admin() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const actions = [
     { index: 0, text: "Пользователи" },
-    { index: 1, text: "Добавить товар" },
+    { index: 1, text: "Товары" },
     { index: 2, text: "Категории" },
     { index: 3, text: "Характеристики" },
     { index: 4, text: "Заказы" },

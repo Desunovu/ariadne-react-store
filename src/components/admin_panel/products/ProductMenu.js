@@ -13,8 +13,6 @@ function ProductMenu() {
         setSelectedAction(newAction);
     }
 
-    console.log(selectedProduct);
-
     return (
         <Box>
             <ToggleButtonGroup value={selectedAction}>

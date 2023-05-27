@@ -10,6 +10,7 @@ export const UPDATE_PRODUCT = gql`
             $addImages: [Upload!]
             $removeImagesById: [Int!]
             $deleteAllImages: Boolean
+            $setImageAsPreviewById: Int
             $addCategoriesById: [Int!]
             $removeCategoriesById: [Int!]
             $removeAllCategories: Boolean
@@ -26,6 +27,7 @@ export const UPDATE_PRODUCT = gql`
             addImages: $addImages
             removeImagesById: $removeImagesById
             deleteAllImages: $deleteAllImages
+            setImageAsPreviewById: $setImageAsPreviewById
             addCategoriesById: $addCategoriesById
             removeCategoriesById: $removeCategoriesById
             removeAllCategories: $removeAllCategories

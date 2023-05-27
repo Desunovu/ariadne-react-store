@@ -1,49 +1,131 @@
-import React, { Fragment } from "react"
-import { Card, CardContent, CardMedia, Typography, Grid, Button } from "@mui/material";
-import ClearIcon from '@mui/icons-material/Clear';
+import React, {useState} from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Button,
+  Box, CardActions,
+} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
-export default function ImagePreview({ images, previewUrls, setImages, setPreviewUrls }) {
+const cardMediaStyle = {
+  height: 100,
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end",
+};
+const cardContentStyle = { display: "flex", flexDirection: "row" };
+const removeButtonStyle = { height: "25%", width: "15%", margin: "2%" };
+const filenameTypographyStyle = {
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+};
 
-  const handleClearButtonClick = (indexToRemove) => {
-    setImages((prevImages) => {
+export default function ImagePreview({
+  productImages,
+  newImages,
+  imagePreviewUrls,
+  setNewImages,
+  setImagePreviewUrls,
+  setImagesToRemoveIds,
+  setNewProductPreviewId,
+}) {
+
+  const [previewId, setPreviewId] = useState(undefined);
+
+  const handleClearProductImageButtonClick = (imageId) => {
+    setImagesToRemoveIds((prevIds) => [...prevIds, imageId]);
+  };
+
+  const handleClearNewImageButtonClick = (indexToRemove) => {
+    setNewImages((prevImages) => {
       const newImages = [...prevImages];
       newImages.splice(indexToRemove, 1);
       return newImages;
-    })
-    setPreviewUrls((prevUrls) => {
+    });
+    setImagePreviewUrls((prevUrls) => {
       const newUrls = [...prevUrls];
       newUrls.splice(indexToRemove, 1);
       return newUrls;
-    })
-  }
+    });
+  };
+
+  const onSetPreviewButtonClick = (imageId) => {
+    setPreviewId(imageId);
+    setNewProductPreviewId(imageId);
+  };
 
   return (
-    <Fragment>
-      {images && images.length > 0 &&
-        <Typography variant="body1">Изображения, которые будут загружены:</Typography>
-      }
-      <Grid container spacing={2}>
-        {previewUrls.map((url, index) => (
-          <Grid item xs={2}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia sx={{ height: 100, display: "flex", flexDirection: "row", justifyContent: "flex-end" }} image={url} title={images[index].name}>
-                <Button
-                  variant="contained"
-                  sx={{ height: "25%", width: "15%", margin: "2%" }}
-                  onClick={() => handleClearButtonClick(index)}
-                >
-                  <ClearIcon/>
-                </Button>
-              </CardMedia>
-              <CardContent sx={{ display: "flex", flexDirection: "row" }}>
-                <Typography varint="body1" sx={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{images[index].name}</Typography>
-              </CardContent>
-            </Card>
-
+    <Box>
+      {productImages && productImages.length > 0 && (
+        <Box>
+          <Typography>Уже загруженные изображения товара: </Typography>
+          <Grid container spacing={2}>
+            {productImages.map((image) => (
+              <Grid item xs={2}>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    sx={cardMediaStyle}
+                    image={image.url}
+                    title={image.filename}
+                  >
+                    <Button
+                      variant="contained"
+                      sx={removeButtonStyle}
+                      onClick={() =>
+                        handleClearProductImageButtonClick(image.id)
+                      }
+                    >
+                      <ClearIcon />
+                    </Button>
+                  </CardMedia>
+                  <CardActions>
+                    <Button disabled={previewId===image.id} onClick={() => onSetPreviewButtonClick(image.id)}>
+                      Назначить превью
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
-        ))
-        }
-      </Grid>
-    </Fragment>
-  )
+        </Box>
+      )}
+      {newImages && newImages.length > 0 && (
+        <Box>
+          <Typography variant="body1">
+            Изображения, которые будут загружены:
+          </Typography>
+          <Grid container spacing={2}>
+            {imagePreviewUrls.map((url, index) => (
+              <Grid item xs={2}>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    sx={cardMediaStyle}
+                    image={url}
+                    title={newImages[index].name}
+                  >
+                    <Button
+                      variant="contained"
+                      sx={removeButtonStyle}
+                      onClick={() => handleClearNewImageButtonClick(index)}
+                    >
+                      <ClearIcon />
+                    </Button>
+                  </CardMedia>
+                  <CardContent sx={cardContentStyle}>
+                    <Typography varint="body1" sx={filenameTypographyStyle}>
+                      {newImages[index].name}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
+    </Box>
+  );
 }
