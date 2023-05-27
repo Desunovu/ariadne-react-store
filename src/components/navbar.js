@@ -46,7 +46,7 @@ function Navbar() {
                 {/*Страница пользователя*/}
                 <Button
                   component={Link}
-                  to="/user/me"
+                  to="/user"
                   sx={navbarButtonStyle}
                 >
                   {userData.email}

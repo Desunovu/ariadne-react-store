@@ -11,9 +11,10 @@ import { Toolbar } from "@mui/material";
 import Cart from "./pages/cart";
 import Orders from "./pages/orders";
 import { AuthContext } from "./context/authContext";
+import {UserPage} from "./pages/user";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { userData } = useContext(AuthContext);
 
   return (
     <div>
@@ -26,12 +27,21 @@ function App() {
         <Route path="/product">
           <Route path=":id" element={<ProductPage />} />
         </Route>
-        {user && (
+        {userData && (
           <>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/user" element={<UserPage />}>
+              {userData.role === "Admin" && (
+                <Route path=":userId" element={<UserPage userId=":userId" />} />
+              )}
+            </Route>
+            {userData.role === "Admin" && (
+              <Route path="/admin" element={<Admin />} />
+            )}
             <Route path="/cart" element={<Cart />} />
             <Route path="/orders" element={<Orders />}>
-              <Route path=":userId" element={<Orders />} />
+              {userData.role === "Admin" && (
+                <Route path=":userId" element={<Orders />} />
+              )}
             </Route>
           </>
         )}
