@@ -16,7 +16,7 @@ if(localStorage.getItem("token")) {
         localStorage.removeItem("user")
     } else {
         initialState.user = decodedToken;
-        initialState.userData = localStorage.getItem("user")
+        initialState.userData = JSON.parse(localStorage.getItem("user"));
     }
 }
 
@@ -31,7 +31,7 @@ function authReducer(state, action) {
     switch(action.type) {
         case "LOGIN":
             initialState.user = jwtDecode(localStorage.getItem("token"));
-            initialState.userData = JSON.parse(localStorage.getItem("user"))
+            initialState.userData = JSON.parse(localStorage.getItem("user"));
             return {
                 ...state,
                 user: initialState.user,
