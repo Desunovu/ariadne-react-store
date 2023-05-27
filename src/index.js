@@ -8,23 +8,24 @@ import {ApolloProvider} from "@apollo/client";
 import {BrowserRouter} from "react-router-dom";
 import {AuthProvider} from "./context/authContext";
 import {DevSupport} from "@react-buddy/ide-toolbox";
-import {ComponentPreviews, useInitial} from "./dev";
+import { ComponentPreviews, useInitial } from "./dev";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+  <ApolloProvider client={client}>
     <AuthProvider>
-        <ApolloProvider client={client}>
-            <BrowserRouter>
-                <React.StrictMode>
-                    <DevSupport ComponentPreviews={ComponentPreviews}
-                                useInitialHook={useInitial}
-                    >
-                        <App/>
-                    </DevSupport>
-                </React.StrictMode>
-            </BrowserRouter>
-        </ApolloProvider>
+      <BrowserRouter>
+        <React.StrictMode>
+          <DevSupport
+            ComponentPreviews={ComponentPreviews}
+            useInitialHook={useInitial}
+          >
+            <App />
+          </DevSupport>
+        </React.StrictMode>
+      </BrowserRouter>
     </AuthProvider>
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -19,7 +19,7 @@ const userButtonsBoxStyle = {
 };
 
 function Navbar() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, userData, logout } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const onLogout = () => {
@@ -43,8 +43,16 @@ function Navbar() {
           <Box alignItems="right" sx={userButtonsBoxStyle}>
             {user ? (
               <div>
+                {/*Страница пользователя*/}
+                <Button
+                  component={Link}
+                  to="/user/me"
+                  sx={navbarButtonStyle}
+                >
+                  {userData.email}
+                </Button>
                 {/*Кнопка админ-панели*/}
-                {document.location.pathname !== "/admin" && user && (
+                {userData.role === "Admin" && (
                   <Button
                     component={Link}
                     to="/admin"
