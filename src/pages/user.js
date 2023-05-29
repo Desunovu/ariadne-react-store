@@ -1,16 +1,19 @@
 import React, { useContext, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import {Box} from "@mui/material";
 import { AuthContext } from "../context/authContext";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER } from "../operations/queries/getUser";
 import ErrorsHandler from "../components/ErrorsHandler";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
+import {UserFullCard} from "../components/UserFullCard";
+import {UpdateUserForm} from "../components/UpdateUserForm";
 
 export function UserPage() {
   const { userData } = useContext(AuthContext);
   const userId = parseInt(useParams().userId);
   const [errors, setErrors] = useState([]);
   const [user, setUser] = useState();
+  const [selectedAction, setSelectedAction] = useState("show");  // ожидается: show, edit
 
   const { loading: getUserQueryLoading, error: getUserQueryError } = useQuery(
     GET_USER,
@@ -30,38 +33,19 @@ export function UserPage() {
 
   return (
     <Box>
-      <Typography variant="h6">Тестовая страница...</Typography>
-      {JSON.stringify(user)}
+      {!!userId && userData.role !== "Admin" && (
+        <ErrorsHandler
+          errors={[
+            {
+              code: "228",
+              message: "У вас нет прав для просмотра данной страницы",
+            },
+          ]}
+        />
+      )}
       <ErrorsHandler errors={errors} apolloError={getUserQueryError} />
-      {user && (
-        <Box>
-          <Typography>id: {user.id}</Typography>
-          <Typography>Email: {user.email}</Typography>
-          <Typography>Role: {user.role}</Typography>
-          <Typography>Avatar: {user.avatarUrl}</Typography>
-          <Typography>Name: {user.firstName}</Typography>
-          <Typography>Last Name: {user.lastName}</Typography>
-          <Typography>Address: {user.address}</Typography>
-          <Typography>Phone number: {user.phoneNumber}</Typography>
-        </Box>
-      )}
-      {!!userId && (
-        <Box>
-          {userData.role !== "Admin" && (
-            <ErrorsHandler
-              errors={[
-                {
-                  code: "228",
-                  message: "У вас нет прав для просмотра данной страницы",
-                },
-              ]}
-            />
-          )}
-          {userData.role === "Admin" && (
-            <>TODO Элемент для редактирования пользователя</>
-          )}
-        </Box>
-      )}
+      {selectedAction === "show" && <UserFullCard user={user} setSelectedAction={setSelectedAction} />}
+      {selectedAction === "edit" && <UpdateUserForm user={user} setSelectedAction={setSelectedAction} />}
     </Box>
   );
 }
