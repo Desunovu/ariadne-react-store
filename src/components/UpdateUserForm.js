@@ -10,6 +10,7 @@ import { useForm } from "../utility/hooks";
 import { useMutation } from "@apollo/react-hooks";
 import { UPDATE_USER } from "../operations/mutations/updateUser";
 import ErrorsHandler from "./ErrorsHandler";
+import {AvatarUploader} from "./AvatarUploader";
 
 export function UpdateUserForm({ user, setSelectedAction }) {
   const [errors, setErrors] = useState([]);
@@ -48,6 +49,7 @@ export function UpdateUserForm({ user, setSelectedAction }) {
       <Typography variant="h5">
         Редактирование пользователя {user.email}
       </Typography>
+      <AvatarUploader userId={user.id} />
       <Stack spacing={2} paddingBottom={2} sx={{ marginTop: "10px" }}>
         {/*E-mail*/}
         <TextField
