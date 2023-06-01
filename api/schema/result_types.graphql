@@ -81,3 +81,9 @@ type CharacteristicResult {
     errors: [Error!]!
     characteristic: Characteristic
 }
+
+type UploadImageResult {
+    status: Boolean!
+    errors: [Error!]!
+    presignedUrl: String
+}

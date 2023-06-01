@@ -27,9 +27,12 @@ minio_client = Minio(
     secret_key=os.environ.get("MINIO_ROOT_PASSWORD"),
     secure=False
 )
-product_bucket = minio_client.bucket_exists(os.environ.get("PRODUCTS_BUCKET"))
-if not product_bucket:
-    minio_client.make_bucket(os.environ.get("PRODUCTS_BUCKET"))
+buckets = ["PRODUCTS_BUCKET", "AVATARS_BUCKET"]
+for bucket in buckets:
+    bucket_name = os.environ.get(bucket)
+    if not minio_client.bucket_exists(bucket_name=bucket_name):
+        minio_client.make_bucket(bucket_name=bucket_name)
+        print(f"[MINIO] Создан бакит {bucket_name}")
 
 # Подключение роутов, моделей, создание таблиц
 from api.routes import *
