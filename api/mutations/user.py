@@ -45,7 +45,7 @@ def resolve_upload_avatar(_, info, **kwargs):
     try:
         presigned_url = minio_client.presigned_put_object(
             bucket_name=avatars_bucket_name,
-            object_name=f"user_avatar_{user_id}",
+            object_name=f"user_avatar_{user_id}.png",
             expires=timedelta(hours=1)
         )
     except:
