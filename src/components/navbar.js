@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
-import { AppBar, Box, Toolbar, Button } from "@mui/material";
+import { AppBar, Box, Toolbar, Button, Avatar } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { StoreTwoTone, ShoppingCartTwoTone } from "@mui/icons-material";
 
 const navbarButtonStyle = {
+  height: "100%",
   color: "white",
 };
 
 const navbarAdminButtonStyle = {
   color: "red",
-  marginLeft: "20px",
 };
 
 const userButtonsBoxStyle = {
   flexGrow: 1,
-  textAlign: "right",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end"
 };
 
 function Navbar() {
@@ -45,29 +47,39 @@ function Navbar() {
               <div>
                 {/*Страница пользователя*/}
                 <Button
+                  variant={"outlined"}
                   component={Link}
                   to="/user"
                   sx={navbarButtonStyle}
                 >
-                  {userData.email}
+                  Профиль
+                  <Avatar alt={userData.id} src={userData.avatarUrl} sx={{marginLeft: "10px"}}/>
                 </Button>
                 {/*Кнопка админ-панели*/}
                 {userData.role === "Admin" && (
                   <Button
+                    variant={"outlined"}
                     component={Link}
                     to="/admin"
+                    style={{ height: '100%' }}
                     sx={navbarAdminButtonStyle}
                   >
                     Панель администратора
                   </Button>
                 )}
-                {/*Аватарка*/}
                 {/*Заказы*/}
-                <Button sx={navbarButtonStyle} onClick={() => {navigate("/orders")}}>
+                <Button
+                  variant={"outlined"}
+                  sx={navbarButtonStyle}
+                  onClick={() => {
+                    navigate("/orders");
+                  }}
+                >
                   Заказы
                 </Button>
                 {/*Корзина*/}
                 <Button
+                  variant={"outlined"}
                   component={Link}
                   to="/cart"
                   sx={navbarButtonStyle}
@@ -77,7 +89,11 @@ function Navbar() {
                   Корзина
                 </Button>
                 {/*Кнопка выхода*/}
-                <Button sx={navbarButtonStyle} onClick={onLogout}>
+                <Button
+                  variant={"outlined"}
+                  sx={navbarButtonStyle}
+                  onClick={onLogout}
+                >
                   Выйти
                 </Button>
               </div>
