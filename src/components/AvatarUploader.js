@@ -71,7 +71,7 @@ export function AvatarUploader({ userId }) {
             Выбрать новый аватар
             <input
               hidden
-              accept="image/*"
+              accept="image/png"
               type="file"
               multiple
               onChange={handleImageChange}
