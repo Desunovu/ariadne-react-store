@@ -19,6 +19,7 @@ mutation.set_field("deleteCharacteristic", admin.resolve_delete_characteristic)
 # Signup/User
 mutation.set_field("createUser", signup.resolve_create_user)
 mutation.set_field("updateUser", user.resolve_update_user)
+mutation.set_field("uploadAvatar", user.resolve_upload_avatar)
 
 
 # Cart

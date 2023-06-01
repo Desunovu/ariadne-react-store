@@ -20,6 +20,11 @@ type Mutation {
         phoneNumber: String = "88005553535"
     ): UserResult!
 
+    """Запрос для загрузки аватара пользователя (Возвращает url для загрузки)"""
+    uploadAvatar(
+        userId: Int!
+    ): UploadImageResult!
+
     """Запрос для добавления товара"""
     addProduct(
         name: String!
