@@ -9,6 +9,7 @@ import { ADD_PRODUCT } from "../../../operations/mutations/addProduct";
 import { useForm } from "../../../utility/hooks";
 import ImageInput from "./ImageInput";
 import ImagePreview from "./ImagePreview";
+import {useNavigate} from "react-router-dom";
 
 export default function AddProduct() {
   const errors = [];
@@ -20,6 +21,7 @@ export default function AddProduct() {
   );
   const [newImages, setNewImages] = useState([]);
   const [imagePreviewUrls, setImagePreviewUrls] = useState([]);
+  let navigate = useNavigate();
 
   const { onChange, onSubmit, values } = useForm(onSubmitButtonClick, {
     name: "Новый товар",
@@ -43,7 +45,7 @@ export default function AddProduct() {
     },
   });
 
-  const [addProduct, { error: productError }] = useMutation(ADD_PRODUCT, {
+  const [addProduct, { called, error: productError }] = useMutation(ADD_PRODUCT, {
     onCompleted: (data) => {
       errors.push(data.addProduct.errors);
     },
@@ -60,6 +62,9 @@ export default function AddProduct() {
         characteristicIds: selectedCharacteristicIds,
         images: newImages,
       },
+      onCompleted: (data) => {
+        if (data.addProduct.status) navigate("/product/"+data.addProduct.product.id)
+      }
     });
   }
 
@@ -107,7 +112,7 @@ export default function AddProduct() {
           }
           items={characteristics}
         />
-        <ImageInput setNewImages={setNewImages} imagePreviewUrls={imagePreviewUrls} />
+        <ImageInput setNewImages={setNewImages} setImagePreviewUrls={setImagePreviewUrls} />
         <ImagePreview
           newImages={newImages}
           imagePreviewUrls={imagePreviewUrls}
@@ -116,7 +121,7 @@ export default function AddProduct() {
         />
       </Stack>
       <ErrorsHandler apolloError={productError} errors={errors} />
-      <Button variant="contained" onClick={onSubmit}>
+      <Button variant="contained" disabled={called} onClick={onSubmit}>
         Добавить товар
       </Button>
     </Container>
