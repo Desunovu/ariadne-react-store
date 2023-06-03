@@ -6,7 +6,7 @@ import ProductFullCard from "../components/ProductFullCard";
 import ErrorsHandler from "../components/ErrorsHandler";
 import {Container} from "@mui/material";
 
-function ProductPage() {
+export function ProductPage() {
   const params = useParams();
   const prodId = parseInt(params.id);
   const [product, setProduct] = useState(undefined);
@@ -36,5 +36,3 @@ function ProductPage() {
   );
 
 }
-
-export default ProductPage;

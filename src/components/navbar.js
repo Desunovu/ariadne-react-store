@@ -67,6 +67,16 @@ function Navbar() {
                     Панель администратора
                   </Button>
                 )}
+                {/*Избраное*/}
+                <Button
+                  variant={"outlined"}
+                  sx={navbarButtonStyle}
+                  onClick={() => {
+                    navigate("/favorites");
+                  }}
+                >
+                  Избраное
+                </Button>
                 {/*Заказы*/}
                 <Button
                   variant={"outlined"}
