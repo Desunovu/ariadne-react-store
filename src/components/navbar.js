@@ -21,7 +21,7 @@ const userButtonsBoxStyle = {
 };
 
 function Navbar() {
-  const { user, userData, logout } = useContext(AuthContext);
+  const { userData, logout } = useContext(AuthContext);
   let navigate = useNavigate();
 
   const onLogout = () => {
@@ -43,7 +43,7 @@ function Navbar() {
           </Button>
           {/*Кнопки пользователя, входа, выхода, регистрации*/}
           <Box alignItems="right" sx={userButtonsBoxStyle}>
-            {user ? (
+            {userData ? (
               <div>
                 {/*Страница пользователя*/}
                 <Button
