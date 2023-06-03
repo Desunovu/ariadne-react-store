@@ -1,6 +1,7 @@
 import {Box, Chip, Divider, ImageList, ImageListItem, Paper, Rating, Typography,} from "@mui/material";
 import React, {useCallback, useState} from "react";
 import {AddToCartButton} from "./AddToCartButton";
+import {AddToFavoritesButton} from "./AddToFavoritesButton";
 
 export default function ProductFullCard({product}) {
   const [selectedImageUrl, setSelectedImageUrl] = useState(
@@ -90,8 +91,9 @@ export default function ProductFullCard({product}) {
             </Typography>
           ))}
         </Box>
-        {/* Добавить в корзину */}
-        <Box sx={{flex: "0"}}>
+        {/* Добавить в корзину или избранное */}
+        <Box sx={{display: "flex", flexDirection: "row", alignContent: "flex-start", flex: "0"}}>
+          <AddToFavoritesButton productId={product.id}/>
           <AddToCartButton product={product}/>
         </Box>
       </Paper>
