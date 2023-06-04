@@ -3,31 +3,48 @@ import {Box, Button} from "@mui/material";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_TO_FAVORITES} from "../operations/mutations/addProductToFavorites";
+import {REMOVE_FROM_FAVORITES} from "../operations/mutations/removeProductFromFavorites";
 
 export function AddToFavoritesButton({productId}) {
   const [errors, setErrors] = useState([]);
   const [isActive, setIsActive] = useState(false);
 
-  const [addProductToFavorites, {loading, error}] = useMutation(ADD_TO_FAVORITES, {
+  const [addProductToFavorites, {loading: addMutationLoading, error: addMutationError}] = useMutation(ADD_TO_FAVORITES, {
     variables: {
       productId: productId,
     },
     onCompleted: (data) => {
-      setErrors(data.addProductToFavorites.errors)
       if (data.addProductToFavorites.status) setIsActive(true)
+      setErrors(data.addProductToFavorites.errors)
     }
   })
 
-  function onButtonClick() {
-    if (!isActive) {
-      addProductToFavorites()
+  const [removeProductFromFavorites, {loading: removeMutationLoading, error: removeMutationError}] = useMutation(REMOVE_FROM_FAVORITES, {
+    variables: {
+      productId: productId,
+    },
+    onCompleted: (data) => {
+      if (data.removeProductFromFavorites.status) setIsActive(false)
+      setErrors(data.removeProductFromFavorites.errors)
     }
-  //   TODO removeProductFromFavorites
+  })
+
+  async function onButtonClick() {
+    if (!isActive) {
+      await addProductToFavorites()
+    }
+    else {
+      await removeProductFromFavorites()
+    }
+
+    if (!!errors) {setIsActive(!isActive)}
   }
 
   return (
     <Box>
-      <Button disabled={(loading || error || errors.length > 0)} onClick={onButtonClick}>
+      <Button
+        disabled={((addMutationLoading || addMutationError) || (removeMutationLoading || removeMutationError))}
+        onClick={onButtonClick}>
         {isActive && <Favorite/>}
         {!isActive && <FavoriteBorder/>}
       </Button>
