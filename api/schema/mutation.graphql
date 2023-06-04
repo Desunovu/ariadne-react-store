@@ -109,7 +109,7 @@ type Mutation {
     ): OrderResult!
 
     """Добавить товар в избраные"""
-    addProductToFavorites(productId: Int): ProductResult
+    addProductToFavorites(productId: Int): ProductResult!
 
     """Убрать товар из избранных"""
     removeProductFromFavorites(productId: Int): Result!
