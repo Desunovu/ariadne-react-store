@@ -36,3 +36,4 @@ mutation.set_field("updateOrderStatus", order.resolve_update_order_status)
 
 # Product/Favorite
 mutation.set_field("addProductToFavorites", favorite.resolve_product_add_to_favorites)
+mutation.set_field("removeProductFromFavorites", favorite.resolve_remove_product_from_favorites)

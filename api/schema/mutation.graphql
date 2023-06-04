@@ -111,6 +111,9 @@ type Mutation {
     """Добавить товар в избраные"""
     addProductToFavorites(productId: Int): ProductResult
 
+    """Убрать товар из избранных"""
+    removeProductFromFavorites(productId: Int): Result!
+
     """Создание характеристики [Администратор]"""
     createCharacteristic(name: String!): CharacteristicResult!
 
