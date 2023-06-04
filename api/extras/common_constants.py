@@ -31,6 +31,7 @@ class Errors:
     CHARACTERISTICS_NOT_SET = create_error(13, "При задании характеристик товара произошла ошибка")
     CHARACTERISTICS_NOT_REMOVED = create_error(14, "При удалении характеристик товара произошла ошибка")
     PREVIEW_NOT_SET = create_error(15, "Превью не задано. Нет изображения, либо изображение принадлежит другому товару")
+    CANT_MANAGE_FAVORITE_PRODUCT = create_error(16, "Добавить/убрать товар в избранном не получилось")
 
 
 class UnauthorizedError(Exception):
