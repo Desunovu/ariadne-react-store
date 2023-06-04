@@ -8,7 +8,6 @@ from api.models import Product, FavoriteProduct
 
 
 @token_required()
-@convert_kwargs_to_snake_case
 def resolve_product_add_to_favorites(_obj, info, **kwargs):
     product = db.session.query(Product).get(kwargs.get("productId"))
     if not product:
