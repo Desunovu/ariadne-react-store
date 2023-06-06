@@ -6,10 +6,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useForm } from "../utility/hooks";
+import { useForm } from "../../utility/hooks";
 import { useMutation } from "@apollo/react-hooks";
-import { UPDATE_USER } from "../operations/mutations/updateUser";
-import ErrorsHandler from "./ErrorsHandler";
+import { UPDATE_USER } from "../../operations/mutations/updateUser";
+import ErrorsHandler from "../ErrorsHandler";
 import {AvatarUploader} from "./AvatarUploader";
 
 export function UpdateUserForm({ user, setSelectedAction }) {

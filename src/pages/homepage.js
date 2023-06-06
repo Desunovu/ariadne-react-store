@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { GET_PRODUCTS } from "../operations/queries/getProducts";
 import { Container, Grid } from "@mui/material";
 import ErrorsHandler from "../components/ErrorsHandler";
-import ProductSimpleCard from "../components/ProductSimpleCard";
+import ProductSimpleCard from "../components/product/ProductSimpleCard";
 
 function Homepage() {
   const [products, setProducts] = useState([]);

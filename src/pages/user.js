@@ -5,8 +5,8 @@ import { useQuery } from "@apollo/react-hooks";
 import { GET_USER } from "../operations/queries/getUser";
 import ErrorsHandler from "../components/ErrorsHandler";
 import {useParams} from "react-router-dom";
-import {UserFullCard} from "../components/UserFullCard";
-import {UpdateUserForm} from "../components/UpdateUserForm";
+import {UserFullCard} from "../components/user/UserFullCard";
+import {UpdateUserForm} from "../components/user/UpdateUserForm";
 
 export function UserPage() {
   const { userData } = useContext(AuthContext);

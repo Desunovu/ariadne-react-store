@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import AdminDrawer from "../components/admin_panel/AdminDrawer";
-import UsersMenu from "../components/admin_panel/users/UsersMenu";
-import ProductMenu from "../components/admin_panel/products/ProductMenu";
-import CategoriesMenu from "../components/admin_panel/categories/CategoriesMenu";
-import CharacteristicMenu from "../components/admin_panel/characteristics/CharacteristicMenu";
-import OrdersMenu from "../components/admin_panel/OrdersMenu";
+import AdminDrawer from "../components/adminMenu/AdminDrawer";
+import UsersMenu from "../components/adminMenu/users/UsersMenu";
+import ProductMenu from "../components/adminMenu/products/ProductMenu";
+import CategoriesMenu from "../components/adminMenu/categories/CategoriesMenu";
+import CharacteristicMenu from "../components/adminMenu/characteristics/CharacteristicMenu";
+import OrdersMenu from "../components/adminMenu/OrdersMenu";
 
 function Admin() {
   const [selectedIndex, setSelectedIndex] = useState(0);

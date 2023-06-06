@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import {Box, Button, ButtonGroup, Typography} from "@mui/material";
 import { useMutation } from "@apollo/react-hooks";
-import { ADD_PRODUCT_TO_CART } from "../operations/mutations/addProductToCart";
-import { REMOVE_PRODUCT_FROM_CART } from "../operations/mutations/removeProductFromCart";
+import { ADD_PRODUCT_TO_CART } from "../../operations/mutations/addProductToCart";
+import { REMOVE_PRODUCT_FROM_CART } from "../../operations/mutations/removeProductFromCart";
 
 const ButtonGroupStyle = {
   display: "flex",
@@ -38,7 +38,7 @@ export function AddToCartButton({ product, amount }) {
         }
       },
     });
-  }, [addProductToCart]);
+  }, [addProductToCart, product.id]);
 
   const onDecreaseButtonClick = useCallback(() => {
     removeProductFromCart({
@@ -55,7 +55,7 @@ export function AddToCartButton({ product, amount }) {
         }
       },
     });
-  }, [removeProductFromCart]);
+  }, [removeProductFromCart, product.id]);
 
   return (
     <Box>

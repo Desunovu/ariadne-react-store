@@ -11,7 +11,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 
 import {useForm} from "../../../utility/hooks";
 
-function CategoriesMenu(props){
+function CategoriesMenu(){
     const [categories, setCategories] = useState([]);
 
     function addCategoryCallback(){
@@ -78,7 +78,7 @@ function CategoriesMenu(props){
                             </CardContent>
                             <CardActions>
                                 <IconButton
-                                    onClick={(e) => removeCategoryCallback(category.id)}
+                                    onClick={() => removeCategoryCallback(category.id)}
                                 >
                                     <Delete/>
                                 </IconButton>

@@ -3,7 +3,6 @@ import {useQuery} from "@apollo/react-hooks";
 import {GET_PRODUCTS} from "../../../operations/queries/getProducts";
 import {
     Button,
-    ButtonBase,
     Container,
     Paper,
     Table,
@@ -53,7 +52,7 @@ export default function ProductList(props) {
                             <TableCell component="th" scope="row">{product.id}</TableCell>
                             <TableCell>{product.name}</TableCell>
                             <TableCell>
-                                <Button onClick={(event) => handleClick(product)}>Редактировать</Button>
+                                <Button onClick={() => handleClick(product)}>Редактировать</Button>
                             </TableCell>
                         </TableRow>))}
                 </TableBody>

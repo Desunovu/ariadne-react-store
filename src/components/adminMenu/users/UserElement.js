@@ -22,7 +22,7 @@ function UserElement(props) {
 
   const onButtonClick = useCallback(() => {
     return navigate("/orders/" + user.id);
-  }, [navigate]);
+  }, [navigate, user.id]);
 
   return (
     <Grid item xs="auto" md={4}>

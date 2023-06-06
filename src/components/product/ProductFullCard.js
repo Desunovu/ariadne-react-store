@@ -1,11 +1,13 @@
-import {Box, Chip, Divider, ImageList, ImageListItem, Paper, Rating, Typography,} from "@mui/material";
+import {Box, Chip, Divider, ImageList, ImageListItem, Paper, Typography,} from "@mui/material";
 import React, {useCallback, useState} from "react";
 import {AddToCartButton} from "./AddToCartButton";
 import {AddToFavoritesButton} from "./AddToFavoritesButton";
+import {Review} from "./Review";
+import {AddReview} from "./AddReview";
 
 export default function ProductFullCard({product}) {
   const [selectedImageUrl, setSelectedImageUrl] = useState(
-    product.images[0].url
+    product.images && product.images.length > 0 ? product.images[0].url : ""
   );
 
   const onImageListItemClick = useCallback((imageUrl) => {
@@ -103,14 +105,9 @@ export default function ProductFullCard({product}) {
           Отзывы:
         </Typography>
         {product.reviews.map((review) => (
-          <Paper key={review.id} elevation={1} sx={{padding: "10px", marginBottom: "10px"}}>
-            {/*<Typography variant="subtitle1" gutterBottom>*/}
-            {/*  Пользователь: {review.userId}*/}
-            {/*</Typography>*/}
-            <Typography variant="body1">{review.text}</Typography>
-            <Rating name="rating" value={review.rating} precision={0.5} readOnly />
-          </Paper>
+          <Review review={review} />
         ))}
+        <AddReview productId={product.id} />
       </Box>
     </div>
   );

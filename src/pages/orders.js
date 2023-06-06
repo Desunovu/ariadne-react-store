@@ -19,9 +19,9 @@ import {
 import { useQuery } from "@apollo/react-hooks";
 import { GET_ORDERS } from "../operations/queries/getOrders";
 import { useParams } from "react-router-dom";
-import UserElement from "../components/admin_panel/users/UserElement";
+import UserElement from "../components/adminMenu/users/UserElement";
 import { GET_USER } from "../operations/queries/getUser";
-import OrderStatusSelector from "../components/admin_panel/OrderStatusSelector";
+import OrderStatusSelector from "../components/adminMenu/OrderStatusSelector";
 
 const BoxStyle = {
   margin: "25px",

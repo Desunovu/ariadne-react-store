@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_PRODUCT} from "../operations/queries/getProduct";
 import {useParams} from "react-router-dom";
-import ProductFullCard from "../components/ProductFullCard";
+import ProductFullCard from "../components/product/ProductFullCard";
 import ErrorsHandler from "../components/ErrorsHandler";
 import {Container} from "@mui/material";
 

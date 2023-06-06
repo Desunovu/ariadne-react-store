@@ -11,7 +11,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import ProductSimpleCard from "../components/ProductSimpleCard";
+import ProductSimpleCard from "../components/product/ProductSimpleCard";
 
 const CartBoxStyle = {
   display: "flex",

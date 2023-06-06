@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useMutation } from "@apollo/react-hooks";
-import { UPLOAD_AVATAR } from "../operations/mutations/uploadAvatar";
-import ErrorsHandler from "./ErrorsHandler";
+import { UPLOAD_AVATAR } from "../../operations/mutations/uploadAvatar";
+import ErrorsHandler from "../ErrorsHandler";
 import {Box, Button, Typography} from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 

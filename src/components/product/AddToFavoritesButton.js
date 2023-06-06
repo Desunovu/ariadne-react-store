@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {Box, Button} from "@mui/material";
 import {Favorite, FavoriteBorder} from "@mui/icons-material";
 import {useMutation} from "@apollo/react-hooks";
-import {ADD_TO_FAVORITES} from "../operations/mutations/addProductToFavorites";
-import {REMOVE_FROM_FAVORITES} from "../operations/mutations/removeProductFromFavorites";
+import {ADD_TO_FAVORITES} from "../../operations/mutations/addProductToFavorites";
+import {REMOVE_FROM_FAVORITES} from "../../operations/mutations/removeProductFromFavorites";
 
 export function AddToFavoritesButton({productId}) {
   const [errors, setErrors] = useState([]);

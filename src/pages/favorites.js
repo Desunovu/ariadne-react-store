@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_FAVORITES} from "../operations/queries/getFavorites";
 import {Container, Grid, Typography} from "@mui/material";
-import ProductSimpleCard from "../components/ProductSimpleCard";
+import ProductSimpleCard from "../components/product/ProductSimpleCard";
 import ErrorsHandler from "../components/ErrorsHandler";
 
 export function Favorites() {
