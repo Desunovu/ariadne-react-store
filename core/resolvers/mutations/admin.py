@@ -1,6 +1,6 @@
 from ariadne import convert_kwargs_to_snake_case
 
-from core import app, db
+from core import db
 from core.extras import token_required, create_result, Roles, Errors
 from core.extras.resolver_utils import add_product_images, delete_product_images, add_product_categories, \
     remove_product_categories, add_product_characteristics, remove_product_characteristics

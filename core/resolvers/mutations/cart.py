@@ -1,7 +1,6 @@
 from core import db
-from core.extras import token_required, create_result, create_simple_result, Errors
+from core.extras import token_required, create_result, Errors
 from core.models import CartLine, Product
-from flask import session
 
 
 @token_required()

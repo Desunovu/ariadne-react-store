@@ -1,8 +1,8 @@
 from ariadne import convert_kwargs_to_snake_case
 
 from core import db
-from core.models import Characteristic
 from core.extras import token_required, Roles
+from core.models import Characteristic
 
 
 @token_required(allowed_roles=Roles.ADMIN)

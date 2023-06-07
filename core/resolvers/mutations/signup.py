@@ -1,7 +1,7 @@
 import os
 
-from werkzeug.security import generate_password_hash
 from ariadne import convert_kwargs_to_snake_case
+from werkzeug.security import generate_password_hash
 
 from core import db
 from core.extras import create_result, Errors, Roles

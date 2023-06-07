@@ -2,12 +2,15 @@ import os
 
 from ariadne import load_schema_from_path, make_executable_schema, upload_scalar, ScalarType
 
-from core.mutations import mutation
-from core.queries import query
-from core.extras.base_type_resolvers import user_type, product_type, cartline_type, review_type, order_type, orderline_type, characteristic_type, product_characteristic_type
+from core.resolvers.base_type_resolvers import user_type, product_type, cartline_type, review_type, order_type, \
+    orderline_type, characteristic_type, product_characteristic_type
+from core.resolvers.mutations import mutation
+from core.resolvers.queries import query
 
 # Тип Date
 date_scalar = ScalarType("Date")
+
+
 @date_scalar.serializer
 def serialize_date(value):
     return value.isoformat()

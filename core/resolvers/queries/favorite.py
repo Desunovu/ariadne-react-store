@@ -1,6 +1,6 @@
 from core import db
-from core.models import FavoriteProduct, Product
 from core.extras import token_required, create_result
+from core.models import FavoriteProduct, Product
 
 
 @token_required()

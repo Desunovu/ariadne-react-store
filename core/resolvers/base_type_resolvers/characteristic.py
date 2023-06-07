@@ -1,4 +1,3 @@
-from core import db
 from core.models import Characteristic, ProductCharacteristic
 
 

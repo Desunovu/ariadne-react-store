@@ -1,10 +1,9 @@
 # В resolver верхнего уровня возвращается core.models.Product
-import os
 
 from core import app, db
 from core.extras import create_simple_result
-from core.models import Category, ProductImage, ProductCategory, Review, ProductCharacteristic, Characteristic
 from core.extras.resolver_utils import get_image_url
+from core.models import Category, ProductImage, ProductCategory, Review, ProductCharacteristic, Characteristic
 
 
 def resolve_product_id(product_obj, _info):
