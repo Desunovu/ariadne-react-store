@@ -1,8 +1,10 @@
+from typing import Optional
+
+from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
-from ariadne import convert_camel_case_to_snake
 
-from core import app, db, minio_client
+from core import app, db, minio_client, logger
 from core.models import ProductImage, ProductCategory, ProductCharacteristic
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
@@ -156,8 +158,25 @@ def remove_product_characteristics(product_id, characteristic_ids=None, remove_a
         return False
 
 
-def get_image_url(bucket_name, object_name):
-    url = minio_client.get_presigned_url(method="GET",
-                                         bucket_name=bucket_name,
-                                         object_name=object_name)
+def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
+    """
+    Возвращает предварительно подписанный URL-адрес для получения изображения из хранилища.
+
+    Аргументы:
+        bucket_name (str): Имя ведра (bucket) в хранилище.
+        object_name (str): Имя объекта (object), представляющего изображение в хранилище.
+
+    Возвращает:
+        Optional[str]: Предварительно подписанный URL-адрес для получения изображения. Если не удалось получить
+        URL, возвращается значение None.
+    """
+    try:
+        url = minio_client.get_presigned_url(
+            method="GET",
+            bucket_name=bucket_name,
+            object_name=object_name
+        )
+    except Exception as ex:
+        logger.error(f"Не удалось получить URL изображения из {bucket_name}: {ex}")
+        url = None
     return url
