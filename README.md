@@ -39,7 +39,7 @@ To install and run the application, follow these steps:
 ### Running without Docker
 
 4. Install the dependencies: `pip install -r requirements.txt`.
-5. Set the `FLASK_APP` environment variable to "api".
+5. Set the `FLASK_APP` environment variable to main package name `core`.
 6. Run the application: `flask run`.
 
 ## GraphQL API
