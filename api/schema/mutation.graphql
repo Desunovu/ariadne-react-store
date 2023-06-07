@@ -11,7 +11,7 @@ type Mutation {
 
     """Запрос для изменения пользователя (по id для администратора)"""
     updateUser(
-        id: String
+        id: Int
         email: String
         password: String
         firstName: String
