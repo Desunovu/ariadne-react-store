@@ -61,6 +61,7 @@ The API provides the following mutations:
 - `createOrder`: Create a new order.
 - `updateOrderStatus`: Update the status of an order.
 - `addProductToFavorites`: Add a product to favorites.
+- `removeProductFromFavorites`: Remove a product from favorites.
 - `createCharacteristic`: Create a new characteristic.
 - `deleteCharacteristic`: Delete a characteristic.
 - `addProductToCart`: Add a product to the shopping cart.
