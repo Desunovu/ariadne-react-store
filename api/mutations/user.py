@@ -2,9 +2,8 @@ import os
 from datetime import timedelta
 
 from werkzeug.security import generate_password_hash
-from ariadne import convert_kwargs_to_snake_case
 
-from api import app, db, minio_client
+from api import db, minio_client
 from api.extras import token_required, create_result, Errors, Roles
 from api.models import User
 
@@ -12,8 +11,7 @@ avatars_bucket_name = os.environ.get("AVATARS_BUCKET")
 
 
 @token_required()
-@convert_kwargs_to_snake_case
-def resolve_update_user(obj, info, **kwargs):
+def resolve_update_user(_obj, info, **kwargs):
     user_id = info.context.current_user.id
     # Проверка на администратра при указании id
     if kwargs.get("id"):
@@ -35,7 +33,7 @@ def resolve_update_user(obj, info, **kwargs):
 
 
 @token_required()
-def resolve_upload_avatar(_, info, **kwargs):
+def resolve_upload_avatar(_obj, info, **kwargs):
     user_id = kwargs.get("userId")
 
     # Проверка на права админа если указан не свой id
