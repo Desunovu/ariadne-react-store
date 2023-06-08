@@ -5,7 +5,9 @@ from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
 
 from core import app, db, minio_client, logger
-from core.models import ProductImage, ProductCategory, ProductCharacteristic
+from core.extras import ForbiddenError
+from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
+    Roles
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
 
@@ -178,6 +180,26 @@ def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
             object_name=object_name
         )
     except Exception as ex:
-        logger.error(f"Не удалось получить URL изображения из {bucket_name}: {ex}")
+        logger.error(
+            f"Не удалось получить URL изображения из {bucket_name}: {ex}")
         url = None
     return url
+
+
+def check_and_get_user_id(current_user, kwargs):
+    """
+    Возвращает идентификатор пользователя из аргумента `userId` в kwargs,
+    если он присутствует, иначе возвращает идентификатор текущего
+    пользователя.
+
+    Исключения:
+        - ForbiddenError: Если текущий пользователь не является
+        администратором
+          и пытается передать аргумент `userId`.
+    """
+    if "userId" in kwargs:
+        # Запрет пользователю делать запрос с аргументом
+        if current_user.role != Roles.ADMIN:
+            raise ForbiddenError("Нет доступа")
+        return kwargs["userId"]
+    return current_user.id
