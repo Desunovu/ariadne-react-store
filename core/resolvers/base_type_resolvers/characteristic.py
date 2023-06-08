@@ -1,19 +1,12 @@
-from core.models import Characteristic, ProductCharacteristic
+from core.models import Characteristic
 
 
-def resolve_characteristic_id(characteristic_obj, _info):
+# Characteristic
+def resolve_characteristic_id(characteristic_obj: Characteristic,
+                              _info) -> int:
     return characteristic_obj.id
 
 
-def resolve_characteristic_name(characterictic_obj, _info):
+def resolve_characteristic_name(characterictic_obj: Characteristic,
+                                _info) -> str:
     return characterictic_obj.name
-
-
-# OBJ: (ProductCharacteristic, Characteristic)
-def resolve_product_characteristic_name(product_characteristic_objects: tuple[ProductCharacteristic, Characteristic], _info):
-    return product_characteristic_objects[1].name
-
-
-# OBJ: (ProductCharacteristic, Characteristic)
-def resolve_product_characteristic_value(product_characteristic_objects, _info):
-    return product_characteristic_objects[0].value

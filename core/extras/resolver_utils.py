@@ -1,9 +1,13 @@
+from typing import Optional
+
+from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
-from ariadne import convert_camel_case_to_snake
 
-from core import app, db, minio_client
-from core.models import ProductImage, ProductCategory, ProductCharacteristic
+from core import app, db, minio_client, logger
+from core.extras import ForbiddenError
+from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
+    Roles
 
 bucket_name = app.config.get("PRODUCTS_BUCKET")
 
@@ -111,8 +115,9 @@ def remove_product_categories(product_id, category_ids=None, remove_all=False, )
         return False
 
 
-def get_cart_total(cartline_and_product_list=None):
-    total = sum([cartline.amount * product.price for cartline, product in cartline_and_product_list])
+def calculate_cart_total(cartline_and_product_list=None):
+    total = sum([cartline.amount * product.price for cartline, product in
+                 cartline_and_product_list])
 
     return total
 
@@ -156,8 +161,45 @@ def remove_product_characteristics(product_id, characteristic_ids=None, remove_a
         return False
 
 
-def get_image_url(bucket_name, object_name):
-    url = minio_client.get_presigned_url(method="GET",
-                                         bucket_name=bucket_name,
-                                         object_name=object_name)
+def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
+    """
+    Возвращает предварительно подписанный URL-адрес для получения изображения из хранилища.
+
+    Аргументы:
+        bucket_name (str): Имя ведра (bucket) в хранилище.
+        object_name (str): Имя объекта (object), представляющего изображение в хранилище.
+
+    Возвращает:
+        Optional[str]: Предварительно подписанный URL-адрес для получения изображения. Если не удалось получить
+        URL, возвращается значение None.
+    """
+    try:
+        url = minio_client.get_presigned_url(
+            method="GET",
+            bucket_name=bucket_name,
+            object_name=object_name
+        )
+    except Exception as ex:
+        logger.error(
+            f"Не удалось получить URL изображения из {bucket_name}: {ex}")
+        url = None
     return url
+
+
+def check_and_get_user_id(current_user, kwargs):
+    """
+    Возвращает идентификатор пользователя из аргумента `userId` в kwargs,
+    если он присутствует, иначе возвращает идентификатор текущего
+    пользователя.
+
+    Исключения:
+        - ForbiddenError: Если текущий пользователь не является
+        администратором
+          и пытается передать аргумент `userId`.
+    """
+    if "userId" in kwargs:
+        # Запрет пользователю делать запрос с аргументом
+        if current_user.role != Roles.ADMIN:
+            raise ForbiddenError("Нет доступа")
+        return kwargs["userId"]
+    return current_user.id

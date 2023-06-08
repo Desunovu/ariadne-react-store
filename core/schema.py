@@ -1,9 +1,21 @@
 import os
 
-from ariadne import load_schema_from_path, make_executable_schema, upload_scalar, ScalarType
+from ariadne import (
+    load_schema_from_path,
+    make_executable_schema,
+    upload_scalar,
+    ScalarType
+)
 
-from core.resolvers.base_type_resolvers import user_type, product_type, cartline_type, review_type, order_type, \
-    orderline_type, characteristic_type, product_characteristic_type
+from core.resolvers.base_type_resolvers import (
+    user_type,
+    product_type,
+    cartline_type,
+    review_type,
+    order_type,
+    orderline_type,
+    characteristic_type
+)
 from core.resolvers.mutations import mutation
 from core.resolvers.queries import query
 
@@ -34,7 +46,6 @@ schema = make_executable_schema(
         order_type,
         orderline_type,
         characteristic_type,
-        product_characteristic_type,
         upload_scalar,
         date_scalar
     ]
