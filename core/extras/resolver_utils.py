@@ -113,8 +113,9 @@ def remove_product_categories(product_id, category_ids=None, remove_all=False, )
         return False
 
 
-def get_cart_total(cartline_and_product_list=None):
-    total = sum([cartline.amount * product.price for cartline, product in cartline_and_product_list])
+def calculate_cart_total(cartline_and_product_list=None):
+    total = sum([cartline.amount * product.price for cartline, product in
+                 cartline_and_product_list])
 
     return total
 
