@@ -10,6 +10,19 @@ from minio import Minio
 
 dotenv.load_dotenv()
 
+# Создание экземпляра логгера
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)  # Установка уровня логирования
+console_handler = logging.StreamHandler()  # Создание обработчика для вывода
+# логов в консоль
+console_handler.setLevel(logging.DEBUG)
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s")  # для указания
+# формата вывода
+console_handler.setFormatter(
+    formatter)  # Привязка обработчика и форматтера к логгеру
+logger.addHandler(console_handler)
+
 # Приложение Flask
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_object(os.environ.get("FLASK_CONFIG"))
@@ -36,14 +49,6 @@ for bucket in buckets:
         minio_client.make_bucket(bucket_name=bucket_name)
         print(f"[MINIO] Создан бакит {bucket_name}")
 
-# Создание экземпляра логгера
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)  # Установка уровня логирования
-console_handler = logging.StreamHandler()  # Создание обработчика для вывода логов в консоль
-console_handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")  # для указания формата вывода
-console_handler.setFormatter(formatter)  # Привязка обработчика и форматтера к логгеру
-logger.addHandler(console_handler)
 
 # Подключение роутов, моделей, создание таблиц
 from core.routes import *
