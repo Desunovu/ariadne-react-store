@@ -9,7 +9,7 @@ from core.models import Product, FavoriteProduct
 def resolve_product_add_to_favorites(_obj, info, **kwargs):
     product = db.session.query(Product).get(kwargs.get("productId"))
     if not product:
-        create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
 
     try:
         db.session.add(
