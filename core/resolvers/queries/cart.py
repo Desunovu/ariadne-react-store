@@ -4,7 +4,7 @@ from core import db
 from core.extras import token_required, create_result
 from core.extras.resolver_utils import (
     calculate_cart_total,
-    check_and_get_user_id
+    get_user_id_from_kwargs_or_current_user
 )
 from core.models import User, CartLine, Product
 
@@ -16,7 +16,7 @@ def resolve_get_cart(_obj, info, **kwargs):
         Для администратора разрешено указать id для получения корзины любого
         пользователя
     """
-    user_id = check_and_get_user_id(
+    user_id = get_user_id_from_kwargs_or_current_user(
         current_user=info.context.current_user,
         kwargs=kwargs
     )

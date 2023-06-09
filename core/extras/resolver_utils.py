@@ -186,7 +186,7 @@ def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
     return url
 
 
-def check_and_get_user_id(current_user, kwargs):
+def get_user_id_from_kwargs_or_current_user(current_user, kwargs):
     """
     Возвращает идентификатор пользователя из аргумента `userId` в kwargs,
     если он присутствует, иначе возвращает идентификатор текущего
