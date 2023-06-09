@@ -44,17 +44,30 @@ def resolve_product_add_to_favorites(_obj, info, **kwargs):
 
 @token_required()
 def resolve_remove_product_from_favorites(_obj, info, **kwargs):
-    favorite_product = db.session.query(FavoriteProduct).filter_by(user_id=info.context.current_user.id,
-                                                                   product_id=kwargs.get("productId")).first()
-    if not favorite_product:
-        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
+    """Удаляет товар из списка избранных у текущего пользователя."""
 
-    print(favorite_product)
+    user_id = info.context.current_user.id
 
     try:
+        # Поиск уже существующей записи в избранном
+        favorite_product = (
+            FavoriteProduct.query
+            .filter_by(user_id=user_id, product_id=kwargs.get("productId"))
+            .first()
+        )
+        if not favorite_product:
+            return create_result(
+                status=False,
+                errors=[Errors.OBJECT_NOT_FOUND]
+            )
         db.session.delete(favorite_product)
         db.session.commit()
-    except Exception:
-        return create_result(status=False, errors=[Errors.CANT_MANAGE_FAVORITE_PRODUCT])
+    except Exception as e:
+        logger.error(e)
+        db.session.rollback()
+        return create_result(
+            status=False,
+            errors=[Errors.CANT_MANAGE_FAVORITE_PRODUCT]
+        )
 
     return create_result()
