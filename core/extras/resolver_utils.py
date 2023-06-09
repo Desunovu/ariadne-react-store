@@ -1,6 +1,7 @@
 from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
+from sqlalchemy.orm import Query
 
 from core import app, db, minio_client, logger
 from core.extras import ForbiddenError
@@ -10,24 +11,44 @@ from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
 products_bucket = app.config.get("PRODUCTS_BUCKET")
 
 
-def query_pagination(query, resolver_args):
-    if "pagination" not in resolver_args:
-        return query
+def query_pagination(query: Query, resolver_args) -> Query:
+    """
+   Применяет пагинацию к запросу.
 
-    offset = resolver_args["pagination"]["offset"]
-    limit = resolver_args["pagination"]["limit"]
-    return query.limit(limit).offset(offset)
+   Аргументы:
+       query (Query): Запрос SQLAlchemy.
+       resolver_args: Аргументы резолвера, содержащие информацию о пагинации.
+
+   Возвращает: Query: Измененный запрос с примененной пагинацией или
+   исходный запрос, если пагинация не указана в аргументах.
+    """
+    pagination = resolver_args.get("pagination")
+    if pagination:
+        offset = pagination.get("offset")
+        limit = pagination.get("limit")
+        return query.limit(limit).offset(offset)
+    return query
 
 
-def query_sort(query, resolver_args):
-    if "sort" not in resolver_args:
-        return query
+def query_sort(query: Query, resolver_args) -> Query:
+    """
+    Применяет сортировку к запросу.
 
-    field = convert_camel_case_to_snake(resolver_args["sort"]["field"])
-    order = resolver_args["sort"]["order"]
-    if order == "DESC":
-        return query.order_by(desc(field))
-    return query.order_by(field)
+    Аргументы:
+        query (Query): Запрос SQLAlchemy.
+        resolver_args: Аргументы резолвера, содержащие информацию о сортировке.
+
+    Возвращает: Query: Измененный запрос с примененной сортировкой или
+    исходный запрос, если сортировка не указана в аргументах.
+    """
+    sort = resolver_args.get("sort")
+    if sort:
+        field = convert_camel_case_to_snake(sort.get("field"))
+        order = sort.get("order")
+        if order == "DESC":
+            return query.order_by(desc(field))
+        return query.order_by(field)
+    return query
 
 
 def add_product_images(images: dict, product_id: int):
