@@ -1,15 +1,13 @@
-from typing import Optional
-
 from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
 
-from core import app, db, minio_client, logger
+from core import app, db, minio_client
 from core.extras import ForbiddenError
 from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
     Roles
 
-bucket_name = app.config.get("PRODUCTS_BUCKET")
+products_bucket = app.config.get("PRODUCTS_BUCKET")
 
 
 def query_pagination(query, resolver_args):
@@ -45,7 +43,7 @@ def add_product_images(images: dict, product_id: int):
         file_ext = file.mimetype.split("/")[1]
         file_name = f"product_{product_id}_{product_image.id}.{file_ext}"  # product_1_15.png
         errors = minio_client.put_object(
-            bucket_name=bucket_name,
+            bucket_name=products_bucket,
             object_name=file_name,
             data=file,
             length=-1,
@@ -73,7 +71,7 @@ def delete_product_images(product_id: int, images_id=None, delete_all=False):
     # Поиск в базе и удаление из хранилища
     product_images = stmt.all()
     objects_to_delete = [DeleteObject(product_image.image_name) for product_image in product_images]
-    errors = minio_client.remove_objects(bucket_name=bucket_name, delete_object_list=objects_to_delete)
+    errors = minio_client.remove_objects(bucket_name=products_bucket, delete_object_list=objects_to_delete)
     for error in errors:
         print(f"error with {error}")
 
@@ -161,7 +159,7 @@ def remove_product_characteristics(product_id, characteristic_ids=None, remove_a
         return False
 
 
-def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
+def get_image_url(bucket_name: str, object_name: str) -> str:
     """
     Возвращает предварительно подписанный URL-адрес для получения изображения из хранилища.
 
@@ -170,19 +168,13 @@ def get_image_url(bucket_name: str, object_name: str) -> Optional[str]:
         object_name (str): Имя объекта (object), представляющего изображение в хранилище.
 
     Возвращает:
-        Optional[str]: Предварительно подписанный URL-адрес для получения изображения. Если не удалось получить
-        URL, возвращается значение None.
+        Предварительно подписанный URL-адрес для получения изображения. Если не удалось получить
     """
-    try:
-        url = minio_client.get_presigned_url(
-            method="GET",
-            bucket_name=bucket_name,
-            object_name=object_name
-        )
-    except Exception as ex:
-        logger.error(
-            f"Не удалось получить URL изображения из {bucket_name}: {ex}")
-        url = None
+    url = minio_client.get_presigned_url(
+        method="GET",
+        bucket_name=products_bucket,
+        object_name=object_name
+    )
     return url
 
 
