@@ -2,7 +2,7 @@ from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
 
-from core import app, db, minio_client
+from core import app, db, minio_client, logger
 from core.extras import ForbiddenError
 from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
     Roles
@@ -84,12 +84,16 @@ def delete_product_images(product_id: int, images_id=None, delete_all=False):
 
 def add_product_categories(product_id, category_ids=None):
     try:
-        product_categories = [ProductCategory(product_id=product_id, category_id=category_id) for category_id in
-                              category_ids]
+        product_categories = [
+            ProductCategory(product_id=product_id, category_id=category_id)
+            for category_id
+            in category_ids
+        ]
         db.session.bulk_save_objects(product_categories)
         db.session.commit()
         return True
-    except Exception:
+    except Exception as e:
+        logger.error(e)
         db.session.rollback()
         return False
 
@@ -109,7 +113,9 @@ def remove_product_categories(product_id, category_ids=None, remove_all=False, )
         stmt.delete()
         db.session.commit()
         return True
-    except Exception:
+    except Exception as e:
+        logger.error(e)
+        db.session.rollback()
         return False
 
 
@@ -135,7 +141,8 @@ def add_product_characteristics(product_id, characteristic_ids=None):
         db.session.add_all(product_characteristics)
         db.session.commit()
         return True
-    except Exception:
+    except Exception as e:
+        logger.error(e)
         db.session.rollback()
         return False
 
@@ -154,7 +161,8 @@ def remove_product_characteristics(product_id, characteristic_ids=None, remove_a
         stmt.delete()
         db.session.commit()
         return True
-    except Exception:
+    except Exception as e:
+        logger.error(e)
         db.session.rollback()
         return False
 
