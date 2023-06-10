@@ -1,7 +1,7 @@
 import os
 
 import core
-from core.extras.resolver_utils import get_image_url
+from core.extras.utils.resolver_utils import get_image_url
 
 avatars_bucket = os.environ.get("AVATARS_BUCKET")
 

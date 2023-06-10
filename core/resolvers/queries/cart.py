@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from core import db
 from core.extras import token_required, create_result
-from core.extras.resolver_utils import (
+from core.extras.utils.resolver_utils import (
     calculate_cart_total,
     get_user_id_from_kwargs_or_current_user
 )

@@ -2,7 +2,7 @@ from ariadne import convert_kwargs_to_snake_case
 
 from core import db
 from core.extras import create_result, token_required, Errors, Roles
-from core.extras.resolver_utils import query_sort, query_pagination
+from core.extras.utils.resolver_utils import query_sort, query_pagination
 from core.models import User
 
 

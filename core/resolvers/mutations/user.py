@@ -5,7 +5,8 @@ from werkzeug.security import generate_password_hash
 
 from core import db, minio_client
 from core.extras import token_required, create_result, Errors, Roles
-from core.extras.resolver_utils import get_user_id_from_kwargs_or_current_user
+from core.extras.utils.resolver_utils import \
+    get_user_id_from_kwargs_or_current_user
 from core.models import User
 
 avatars_bucket_name = os.environ.get("AVATARS_BUCKET")

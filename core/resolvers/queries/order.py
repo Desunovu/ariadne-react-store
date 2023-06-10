@@ -2,7 +2,7 @@ from typing import List
 
 from core import db
 from core.extras import token_required, create_result
-from core.extras.resolver_utils import (
+from core.extras.utils.resolver_utils import (
     query_sort,
     query_pagination,
     get_user_id_from_kwargs_or_current_user

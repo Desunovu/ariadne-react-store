@@ -1,7 +1,7 @@
 from core import db
 from core.extras.auth_wrapper import token_required
 from core.extras.common_constants import Errors, Roles
-from core.extras.creation_utils import create_result
+from core.extras.utils.creation_utils import create_result
 from core.models import Review, Product
 
 

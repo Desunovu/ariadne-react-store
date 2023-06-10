@@ -1,8 +1,8 @@
 from typing import List, Dict, Optional
 
 from core import app, db
-from core.extras.creation_utils import create_image_type_result
-from core.extras.resolver_utils import get_image_url
+from core.extras.utils.creation_utils import create_image_type_result
+from core.extras.utils.resolver_utils import get_image_url
 from core.models import (
     Category,
     ProductImage,
