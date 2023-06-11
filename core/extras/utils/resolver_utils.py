@@ -51,32 +51,6 @@ def query_sort(query: Query, resolver_args) -> Query:
     return query
 
 
-def add_product_images(images: dict, product_id: int):
-    # TODO реализовать без цикла
-    for file in images:
-        # Добавление в таблицу product_images
-        product_image = ProductImage(product_id=product_id, image_name="no_name")
-        db.session.add(product_image)
-        db.session.commit()
-
-        # Сохранение в хранилище minio
-        # TODO проверка типа файла
-        file_ext = file.mimetype.split("/")[1]
-        file_name = f"product_{product_id}_{product_image.id}.{file_ext}"  # product_1_15.png
-        errors = minio_client.put_object(
-            bucket_name=products_bucket,
-            object_name=file_name,
-            data=file,
-            length=-1,
-            part_size=10 * 1024 * 1024
-        )
-
-        # Обновление имени в базе после сохранения изображения
-        product_image.image_name = file_name
-        db.session.commit()
-    return True
-
-
 def delete_product_images(product_id: int, images_id=None, delete_all=False):
     # Выражение для запроса
     if delete_all:

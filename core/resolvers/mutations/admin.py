@@ -2,10 +2,14 @@ from ariadne import convert_kwargs_to_snake_case
 
 from core import db
 from core.extras import token_required, create_result, Roles, Errors
-from core.extras.utils.resolver_utils import add_product_images, \
-    delete_product_images, add_product_categories, \
-    remove_product_categories, add_product_characteristics, \
+from core.extras.utils.image_utils import save_product_images
+from core.extras.utils.resolver_utils import (
+    delete_product_images,
+    add_product_categories,
+    remove_product_categories,
+    add_product_characteristics,
     remove_product_characteristics
+)
 from core.models import Product, User, Category, Characteristic, \
     ProductCharacteristic, ProductImage
 
@@ -23,7 +27,7 @@ def resolve_add_product(_obj, _info, **kwargs):
 
     # Добавление изображений
     if "images" in kwargs:
-        status = add_product_images(images=kwargs.get("images"), product_id=product.id)
+        status = save_product_images(images=kwargs.get("images"), product_id=product.id)
         if not status:
             errors.append(Errors.IMAGES_NOT_UPLOADED)
 
@@ -60,7 +64,7 @@ def resolve_update_product(_obj, _info, **kwargs):
 
     # Добавление изображений
     if kwargs.get("addImages"):
-        status = add_product_images(images=kwargs.get("addImages"), product_id=product.id)
+        status = save_product_images(images=kwargs.get("addImages"), product_id=product.id)
         if not status:
             errors.append(Errors.IMAGES_NOT_UPLOADED)
 
