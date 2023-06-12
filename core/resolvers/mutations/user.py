@@ -5,6 +5,8 @@ from werkzeug.security import generate_password_hash
 
 from core import db, minio_client
 from core.extras import token_required, create_result, Errors, Roles
+from core.extras.utils.resolver_utils import \
+    get_user_id_from_kwargs_or_current_user
 from core.models import User
 
 avatars_bucket_name = os.environ.get("AVATARS_BUCKET")
@@ -34,19 +36,15 @@ def resolve_update_user(_obj, info, **kwargs):
 
 @token_required()
 def resolve_upload_avatar(_obj, info, **kwargs):
-    user_id = kwargs.get("userId")
+    user_id = get_user_id_from_kwargs_or_current_user(
+        current_user=info.context.current_user,
+        kwargs=kwargs
+    )
 
-    # Проверка на права админа если указан не свой id
-    if user_id != info.context.current_user.id and info.context.current_user.role != Roles.ADMIN:
-        return create_result(status=False, errors=[Errors.ACCESS_DENIED], presignedUrl=None)
-
-    try:
-        presigned_url = minio_client.presigned_put_object(
-            bucket_name=avatars_bucket_name,
-            object_name=f"user_avatar_{user_id}.png",
-            expires=timedelta(hours=1)
-        )
-    except:
-        return create_result(status=False, errors=[Errors.IMAGES_NOT_UPLOADED], presignedUrl=None)
+    presigned_url = minio_client.presigned_put_object(
+        bucket_name=avatars_bucket_name,
+        object_name=f"user_avatar_{user_id}.png",
+        expires=timedelta(hours=1)
+    )
 
     return create_result(presignedUrl=presigned_url)
