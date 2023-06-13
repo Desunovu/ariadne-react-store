@@ -26,21 +26,32 @@ To run this application, the following requirements must be met:
 
 ## Installation and Usage
 
-To install and run the application, follow these steps:
+To install and run the application in development mode, follow these steps:
+
+### Cloning the Repository and Configuring Environment Variables
 
 1. Clone the repository: `git clone https://github.com/Desunovu/graphql-store-backend.git`.
 2. Navigate to the project directory.
 3. Edit the `.env` file, specifying the device address in the local network for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
 
+Now, run the application using one of the following methods:
+
 ### Running with Docker
 
-4. Execute docker-compose up to launch the application, along with the required services.
+1. Execute the command `docker-compose --profile full up -d` to deploy the entire application, including the required services.
 
-### Running without Docker
+### Running the Application in Manual Mode
 
-4. Install the dependencies: `pip install -r requirements.txt`.
-5. Set the `FLASK_APP` environment variable to main package name `core`.
-6. Run the application: `flask run`.
+1. Option 1: Deploy the `postgres` and `minio` services using `docker-compose up -d`.
+
+   **Note:** If you choose this option, proceed to Step 3.
+
+2. Option 2: Deploy and configure `postgres` and `minio` services independently. Update the `.env` file with the necessary connection details.
+
+
+3. Install the dependencies: `pip install -r requirements.txt`.
+4. Set the `FLASK_APP` environment variable to the main package name `core`.
+5. Run the application: `flask run`.
 
 ## GraphQL API
 

@@ -3,6 +3,8 @@ services:
   store-backend:
     image: store-backend:latest
     container_name: store-backend
+    profiles:
+      - full
     restart: always
     build:
       context: ./
