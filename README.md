@@ -42,17 +42,12 @@ Now, run the application using one of the following methods:
 
 ### Running the Application in Manual Mode
 
-1. Option 1: Deploy the `postgres` and `minio` services using `docker-compose --profile dev up -d`.
+1. Option 1: Deploy the `postgres` and `minio` services using `docker-compose --profile dev up -d`. 
+Option 2: Deploy and configure `postgres` and `minio` services independently.
 
-   **Note:** If you choose this option, proceed to Step 3.
-
-2. Option 2: Deploy and configure `postgres` and `minio` services independently. Update the `.env` file with the necessary connection details.
-
-
-3. Install the dependencies: `pip install -r requirements.txt`.
-4. Set the `FLASK_APP` environment variable to the main package name `core`.
-5. Upgrade the database: `flask db upgrade`
-6. Run the application: `flask run`.
+2. Install the dependencies: `pip install -r requirements.txt`.
+3. Set the `FLASK_APP` environment variable to the main package name `core`.
+4. Run the application: `flask run`.
 
 ## GraphQL API
 
