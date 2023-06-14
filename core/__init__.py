@@ -4,7 +4,7 @@ import os
 import dotenv
 from flask import Flask
 from flask_cors import CORS
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 from minio import Minio
 
@@ -40,6 +40,8 @@ CORS(app)
 # Database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+with app.app_context():
+    upgrade()
 
 # MinIO client
 minio_client = Minio(
