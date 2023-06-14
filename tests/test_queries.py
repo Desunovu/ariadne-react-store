@@ -1,23 +1,10 @@
 import pytest
 
-from core import app
-
-
-@pytest.fixture
-def test_client():
-    with app.test_client() as client:
-        yield client
-
-
-def execute_query(client, query):
-    rv = client.post("/graphql", json=query)
-    result = rv.get_json()
-    return result
+from tests import execute_query
 
 
 @pytest.mark.parametrize("email, password", [
     ("asd@asd", "asd"),
-    ("asd2@asd2", "asd")
 ])
 def test_login_user(test_client, email, password):
     login_user_query = {

@@ -8,7 +8,9 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from minio import Minio
 
-dotenv.load_dotenv()
+# Если не обнаружены переменные окружения - загрузить из .env
+if not os.environ.get("FLASK_CONFIG"):
+    dotenv.load_dotenv()
 
 # Создание экземпляра логгера
 logger = logging.getLogger(__name__)
