@@ -41,7 +41,14 @@ CORS(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 with app.app_context():
-    upgrade()
+    # Получаем путь к текущему скрипту
+    app_dir = os.path.abspath(os.path.dirname(__file__))
+    # Поднимаемся на уровень вверх
+    parent_dir = os.path.dirname(app_dir)
+    # Составляем путь до директории migrations
+    migrations_dir = os.path.join(parent_dir, 'migrations')
+    # Обновляем базу данных
+    upgrade(directory=migrations_dir)
 
 # MinIO client
 minio_client = Minio(
