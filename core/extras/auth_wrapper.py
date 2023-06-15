@@ -2,9 +2,9 @@ from functools import wraps
 from typing import Callable
 
 import jwt
-from flask import request
+from flask import request, current_app
 
-from core import app, db, logger
+from core import db, logger
 from core.models import User
 from .common_constants import Roles, UnauthorizedError, ForbiddenError
 
@@ -71,7 +71,7 @@ def get_user_from_token(token: str) -> User:
     пользователь не найден в базе данных.
     """
     try:
-        data = jwt.decode(jwt=token, key=app.secret_key, algorithms='HS256')
+        data = jwt.decode(jwt=token, key=current_app.secret_key, algorithms='HS256')
     except jwt.exceptions.InvalidTokenError:
         logger.warning(
             f"Клиент {request.remote_addr} передал неправильный токен"

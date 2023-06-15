@@ -1,6 +1,7 @@
+import os
 from typing import List, Dict, Optional
 
-from core import app, db
+from core import db
 from core.extras.utils.creation_utils import create_image_type_result
 from core.extras.utils.resolver_utils import get_image_url
 from core.models import (
@@ -12,6 +13,8 @@ from core.models import (
     Characteristic,
     Product
 )
+
+products_bucket = os.environ.get("PRODUCTS_BUCKET")
 
 
 def resolve_product_id(product_obj: Product, _info) -> int:
@@ -61,7 +64,7 @@ def resolve_product_preview_image(product_obj: Product, _info) -> Optional[
             image_id=preview_image.id,
             filename=preview_image.image_name,
             url=get_image_url(
-                bucket_name=app.config.get("PRODUCTS_BUCKET"),
+                bucket_name=products_bucket,
                 object_name=preview_image.image_name
             )
         )
@@ -82,7 +85,7 @@ def resolve_product_images(product_obj: Product, _info) -> List[Dict]:
             image_id=image.id,
             filename=image.image_name,
             url=get_image_url(
-                bucket_name=app.config.get("PRODUCTS_BUCKET"),
+                bucket_name=products_bucket,
                 object_name=image.image_name
             )
         )
