@@ -177,7 +177,7 @@ def get_image_url(bucket_name: str, object_name: str) -> str:
     """
     url = minio_client.get_presigned_url(
         method="GET",
-        bucket_name=products_bucket,
+        bucket_name=bucket_name,
         object_name=object_name
     )
     return url
