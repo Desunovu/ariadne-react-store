@@ -6,7 +6,7 @@ from tests import execute_query
 @pytest.mark.parametrize("email, password", [
     ("asd@asd", "asd"),
 ])
-def test_login_user(test_client, email, password):
+def test_login_user(login_test_client, email, password):
     login_user_query = {
         "query":
             """{ loginUser(email: "%s", password: "%s") {
@@ -19,7 +19,7 @@ def test_login_user(test_client, email, password):
             }""" % (email, password)
     }
 
-    result = execute_query(client=test_client, query=login_user_query)
+    result = execute_query(client=login_test_client, query=login_user_query)
 
     assert "errors" not in result
     assert result["data"]["loginUser"]["status"] is True

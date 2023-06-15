@@ -1,11 +1,24 @@
 import pytest
+from werkzeug.security import generate_password_hash
 
-from core import app
+from core import app, db, User, Roles
 
-
-# TODO Апгрейд и заполнение базы данными перед тестами
 
 @pytest.fixture
-def test_client():
-    with app.test_client() as client:
-        yield client
+def login_test_client():
+    with app.app_context():
+        user = User(
+            email="asd@asd",
+            password=generate_password_hash("asd"),
+            role=Roles.CUSTOMER,
+            first_name="Женя",
+            last_name="Васечкин",
+            phone_number="asd123"
+        )
+        db.session.add(user)
+        db.session.commit()
+
+        with app.test_client() as client:
+            yield client
+
+        # TODO отчистка таблицы после записи
