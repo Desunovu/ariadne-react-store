@@ -4,15 +4,39 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      APP_SECRET_KEY: secret
+      FLASK_CONFIG: config.TestingConfig
+
+      # Minio
+      AVATARS_BUCKET: avatars
+      PRODUCTS_BUCKET: productsimg
+      MINIO_ENDPOINT: localhost:9000
+
+      # Postgres
+      TESTING_DATABASE_URI: postgresql+psycopg2://postgres:postgres@localhost:5432/testdb
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+      minio:
+        image: minio/minio:latest
+        env:
+          MINIO_ROOT_USER: minioadmin
+          MINIO_ROOT_PASSWORD: minioadmin
+        ports:
+          - 9000:9000
+        options: --health-cmd "curl -f http://localhost:9000/minio/health/live" --health-interval 10s --health-timeout 5s --health-retries 3
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Set up PostgreSQL
-        uses: docker://postgres:latest
-
-#      - name: Restore test database
-#        run: |
 
       - name: Set up Python
         uses: actions/setup-python@v2
