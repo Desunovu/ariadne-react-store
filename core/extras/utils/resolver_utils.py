@@ -1,14 +1,16 @@
+import os
+
 from ariadne import convert_camel_case_to_snake
 from minio.deleteobjects import DeleteObject
 from sqlalchemy import desc
 from sqlalchemy.orm import Query
 
-from core import app, db, minio_client, logger
+from core import db, minio_client, logger
 from core.extras import ForbiddenError
 from core.models import ProductImage, ProductCategory, ProductCharacteristic, \
     Roles
 
-products_bucket = app.config.get("PRODUCTS_BUCKET")
+products_bucket = os.environ.get("PRODUCTS_BUCKET")
 
 
 def query_pagination(query: Query, resolver_args) -> Query:
@@ -175,7 +177,7 @@ def get_image_url(bucket_name: str, object_name: str) -> str:
     """
     url = minio_client.get_presigned_url(
         method="GET",
-        bucket_name=products_bucket,
+        bucket_name=bucket_name,
         object_name=object_name
     )
     return url

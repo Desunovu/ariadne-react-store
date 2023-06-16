@@ -1,32 +1,24 @@
 import os
 
-from dotenv import load_dotenv
-
-load_dotenv()
-
 app_dir = os.path.abspath(os.path.dirname(__file__))
 
 
 class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DEBUG = True
+    DEBUG = False
     APP_DIR = app_dir
-
-    # Minio
-    MINIO_ENDPOINT = os.environ.get("MINIO_ENDPOINT")
-    MINIO_ACCESS_KEY = os.environ.get("MINIO_ROOT_USER")
-    MINIO_SECRET_KEY = os.environ.get("MINIO_ROOT_PASSWORD")
-    PRODUCTS_BUCKET = os.environ.get("PRODUCTS_BUCKET")
 
 
 class DevelopmentConfig(BaseConfig):
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEVELOPMENT_DATABASE_URI')
 
 
 class TestingConfig(BaseConfig):
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TESTING_DATABASE_URI')
 
 
 class ProductionConfig(BaseConfig):
-    DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URI')
