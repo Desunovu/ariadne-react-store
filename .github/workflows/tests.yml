@@ -12,6 +12,8 @@ jobs:
       AVATARS_BUCKET: avatars
       PRODUCTS_BUCKET: productsimg
       MINIO_ENDPOINT: localhost:9000
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
 
       # Postgres
       TESTING_DATABASE_URI: postgresql+psycopg2://postgres:postgres@localhost:5432/testdb
