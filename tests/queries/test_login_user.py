@@ -23,9 +23,9 @@ def login_user_query(email, password):
 @pytest.mark.parametrize("email, password", [
     ("valid_email@example.com", "valid_password"),
 ])
-def test_successful_login(client_with_valid_user, email, password):
+def test_successful_login(client_with_valid_db, email, password):
     result = execute_query(
-        client=client_with_valid_user,
+        client=client_with_valid_db,
         query=login_user_query(email, password)
     )
 
@@ -40,9 +40,9 @@ def test_successful_login(client_with_valid_user, email, password):
     ("valid_email@example.com", "wrong_password"),
     ("wrong_email@example.com", "valid_password"),
 ])
-def test_failed_login(client_with_valid_user, email, password):
+def test_failed_login(client_with_valid_db, email, password):
     result = execute_query(
-        client=client_with_valid_user,
+        client=client_with_valid_db,
         query=login_user_query(email, password)
     )
 

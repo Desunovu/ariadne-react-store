@@ -33,9 +33,9 @@ def create_user_mutation(email, password):
     ("asd@asd", "asd", "Markus", "Person", "Cool st", "5-500-505"),
     ("asd2@asd", "asd", "Markus2", "Person2", "Cool2 st", "5-500-506"),
 ])
-def test_successful_create_user(client_with_valid_user, email, password, first_name, last_name, address, phone_number):
+def test_successful_create_user(client_with_valid_db, email, password, first_name, last_name, address, phone_number):
     result = execute_query(
-        client=client_with_valid_user,
+        client=client_with_valid_db,
         query=create_user_mutation(email, password)
     )
 
@@ -49,9 +49,9 @@ def test_successful_create_user(client_with_valid_user, email, password, first_n
 @pytest.mark.parametrize("email, password", [
     ("valid_email@example.com", "valid_password"),
 ])
-def test_failed_create_user(client_with_valid_user, email, password):
+def test_failed_create_user(client_with_valid_db, email, password):
     result = execute_query(
-        client=client_with_valid_user,
+        client=client_with_valid_db,
         query=create_user_mutation(email=email, password=password)
     )
 
@@ -64,9 +64,9 @@ def test_failed_create_user(client_with_valid_user, email, password):
 @pytest.mark.parametrize("email, password", [
     ("", ""),
 ])
-def test_error_create_user(client_with_valid_user, email, password):
+def test_error_create_user(client_with_valid_db, email, password):
     result = execute_query(
-        client=client_with_valid_user,
+        client=client_with_valid_db,
         query=create_user_mutation(email=email, password=password)
     )
 
