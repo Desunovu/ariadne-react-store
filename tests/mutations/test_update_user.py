@@ -1,6 +1,7 @@
 import pytest
 
-from tests import execute_query, get_valid_user_token
+from core.extras import Roles
+from tests import execute_query, get_token_by_role, get_user_id_by_role
 
 user_result = """
                 status
@@ -63,7 +64,7 @@ def update_user_by_id_mutation(user_id, email, first_name, last_name, address, p
 def test_successful_update_user_by_user(client_with_valid_db, email, first_name, last_name, address, phone_number):
     result = execute_query(
         client=client_with_valid_db,
-        token=get_valid_user_token(),
+        token=get_token_by_role(),
         query=update_user_mutation(email, first_name, last_name, address, phone_number),
     )
 
@@ -77,13 +78,14 @@ def test_successful_update_user_by_user(client_with_valid_db, email, first_name,
 
 
 # Тест успешного обновления пользователя администратором
-@pytest.mark.parametrize("user_id, email, first_name, last_name, address, phone_number",[
-    (1, "asd@asd", "Markus", "Person", "Cool st", "5-500-505"),
+@pytest.mark.parametrize("email, first_name, last_name, address, phone_number",[
+    ("asd@asd", "Markus", "Person", "Cool st", "5-500-505"),
 ])
-def test_successful_update_user_by_admin(client_with_valid_db, user_id, email, first_name, last_name, address, phone_number):
+def test_successful_update_user_by_admin(client_with_valid_db, email, first_name, last_name, address, phone_number):
+    user_id = get_user_id_by_role(role=Roles.CUSTOMER)
     result = execute_query(
         client=client_with_valid_db,
-        token=get_valid_user_token(admin=True),
+        token=get_token_by_role(role=Roles.ADMIN),
         query=update_user_by_id_mutation(user_id, email, first_name, last_name, address, phone_number),
     )
 

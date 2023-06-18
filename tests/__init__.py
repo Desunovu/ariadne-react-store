@@ -20,7 +20,6 @@ def execute_query(client, token, query):
 
 def create_test_users():
     user = User(
-        id=1,
         email="valid_email@example.com",
         password=generate_password_hash("valid_password"),
         role=Roles.CUSTOMER,
@@ -29,7 +28,6 @@ def create_test_users():
         phone_number="asd123"
     )
     admin = User(
-        id=2,
         email="admin@example.com",
         password=generate_password_hash("valid_password"),
         role=Roles.ADMIN,
@@ -41,14 +39,21 @@ def create_test_users():
     db.session.commit()
 
 
-def get_valid_user_token(admin=False):
+def get_user_id_by_role(role=Roles.CUSTOMER):
+    user = db.session.query(User).filter(User.role == role).first()
+    return user.id
+
+
+def get_token_by_role(role=Roles.CUSTOMER):
     """Использует резолвер типа loginUser для получения токена пользователя"""
-    if not admin:
+    if role == Roles.CUSTOMER:
         email = "valid_email@example.com"
         password = "valid_password"
-    else:
+    elif role == Roles.ADMIN:
         email = "admin@example.com"
         password = "valid_password"
+    else:
+        return None
 
     token = resolve_login_user(
         _obj=None,
