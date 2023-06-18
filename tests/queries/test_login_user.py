@@ -26,6 +26,7 @@ def login_user_query(email, password):
 def test_successful_login(client_with_valid_db, email, password):
     result = execute_query(
         client=client_with_valid_db,
+        token=None,
         query=login_user_query(email, password)
     )
 
@@ -43,6 +44,7 @@ def test_successful_login(client_with_valid_db, email, password):
 def test_failed_login(client_with_valid_db, email, password):
     result = execute_query(
         client=client_with_valid_db,
+        token=None,
         query=login_user_query(email, password)
     )
 

@@ -36,6 +36,7 @@ def create_user_mutation(email, password):
 def test_successful_create_user(client_with_valid_db, email, password, first_name, last_name, address, phone_number):
     result = execute_query(
         client=client_with_valid_db,
+        token=None,
         query=create_user_mutation(email, password)
     )
 
@@ -52,6 +53,7 @@ def test_successful_create_user(client_with_valid_db, email, password, first_nam
 def test_failed_create_user(client_with_valid_db, email, password):
     result = execute_query(
         client=client_with_valid_db,
+        token=None,
         query=create_user_mutation(email=email, password=password)
     )
 
@@ -67,6 +69,7 @@ def test_failed_create_user(client_with_valid_db, email, password):
 def test_error_create_user(client_with_valid_db, email, password):
     result = execute_query(
         client=client_with_valid_db,
+        token=None,
         query=create_user_mutation(email=email, password=password)
     )
 
