@@ -1,3 +1,6 @@
+from typing import Type
+
+from flask.testing import FlaskClient
 from werkzeug.security import generate_password_hash
 
 from core import db, create_app
@@ -53,7 +56,7 @@ def get_token_by_role(role=Roles.CUSTOMER):
         email = "admin@example.com"
         password = "valid_password"
     else:
-        return None
+        return ""
 
     token = resolve_login_user(
         _obj=None,
