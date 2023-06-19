@@ -11,7 +11,18 @@ from core.resolvers.queries.signin import resolve_login_user
 app = create_app()
 
 
-def execute_query(client, token, query):
+def execute_query(client: FlaskClient, token: str, query: dict) -> dict:
+    """
+    Выполняет запрос GraphQL.
+
+    Args:
+        client (FlaskClient): Flask-клиент для отправки запроса.
+        token (str): Токен доступа пользователя.
+        query (dict): Запрос в формате JSON.
+
+    Returns:
+        dict: Результат выполнения запроса.
+    """
     rv = client.post(
         "/graphql",
         json=query,
@@ -22,6 +33,9 @@ def execute_query(client, token, query):
 
 
 def create_test_users():
+    """
+    Создает тестовых пользователей в базе данных.
+    """
     user = User(
         email="valid_email@example.com",
         password=generate_password_hash("valid_password"),
@@ -42,13 +56,30 @@ def create_test_users():
     db.session.commit()
 
 
-def get_user_id_by_role(role=Roles.CUSTOMER):
+def get_user_id_by_role(role: str = Roles.CUSTOMER) -> int:
+    """
+    Возвращает идентификатор пользователя с указанной ролью.
+
+    Args:
+        role (str): Роль пользователя. По умолчанию - CUSTOMER.
+
+    Returns:
+        int: Идентификатор пользователя.
+    """
     user = db.session.query(User).filter(User.role == role).first()
     return user.id
 
 
-def get_token_by_role(role=Roles.CUSTOMER):
-    """Использует резолвер типа loginUser для получения токена пользователя"""
+def get_token_by_role(role: str = Roles.CUSTOMER) -> str:
+    """
+    Возвращает токен доступа пользователя с указанной ролью.
+
+    Args:
+        role (str): Роль пользователя. По умолчанию - CUSTOMER.
+
+    Returns:
+        str: Токен доступа пользователя.
+    """
     if role == Roles.CUSTOMER:
         email = "valid_email@example.com"
         password = "valid_password"
@@ -67,7 +98,12 @@ def get_token_by_role(role=Roles.CUSTOMER):
     return token
 
 
-def delete_all_from_table(model):
-    # Очистка таблицы после выполнения теста
+def delete_all_from_table(model: Type[db.Model]):
+    """
+    Очищает таблицу от всех записей модели.
+
+    Args:
+        model: Модель базы данных.
+    """
     db.session.query(model).delete()
     db.session.commit()
