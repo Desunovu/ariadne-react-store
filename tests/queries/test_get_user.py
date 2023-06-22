@@ -65,7 +65,7 @@ def test_failed_get_other_user_info_unauthorized(client_with_valid_db):
     assert result["data"]["getUser"]["errors"][0] == Errors.ACCESS_DENIED
 
 
-def testa_successful_get_other_user_info_as_admin(client_with_valid_db):
+def test_successful_get_other_user_info_as_admin(client_with_valid_db):
     """
     Тест выполнения запроса getUser для получения информации о чужом аккаунте,
     выполненный администратором
