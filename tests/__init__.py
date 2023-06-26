@@ -107,3 +107,18 @@ def delete_all_from_table(model: Type[db.Model]):
     """
     db.session.query(model).delete()
     db.session.commit()
+
+
+def make_sort_and_pagination_args(offset=None, limit=None, field=None, order=None):
+    """Создает строку аргументов запроса для сортировки и пагинации."""
+
+    pagination = ""
+    if offset is not None or limit is not None:
+        pagination = f"pagination: {{offset: {offset}, limit: {limit}}}"
+
+    sort = ""
+    if field is not None or order is not None:
+        sort = f"sort: {{field: {field}, order: {order}}}"
+
+    args = ", ".join(filter(None, [pagination, sort]))
+    return f"({args})" if args else ""
