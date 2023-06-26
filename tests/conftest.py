@@ -1,44 +1,24 @@
 import pytest
-from werkzeug.security import generate_password_hash
+from flask.testing import FlaskClient
 
-from core import create_app, db
-from core.extras import Roles
 from core.models import User
-
-
-def create_valid_user():
-    user = User(
-        email="valid_email@example.com",
-        password=generate_password_hash("valid_password"),
-        role=Roles.CUSTOMER,
-        first_name="Женя",
-        last_name="Васечкин",
-        phone_number="asd123"
-    )
-    db.session.add(user)
-    db.session.commit()
-
-
-def delete_all_from_table(model):
-    # Очистка таблицы после выполнения теста
-    db.session.query(model).delete()
-    db.session.commit()
+from tests import delete_all_from_table, create_test_users, app
 
 
 @pytest.fixture
-def test_app():
-    app = create_app()
+def client_with_valid_db() -> FlaskClient:
+    """
+    Создает клиент Flask с валидной базой данных для выполнения тестов.
 
-    yield app
-
-
-@pytest.fixture
-def login_test_client(test_app):
-    with test_app.app_context():
+    Yields:
+        FlaskClient: Клиент Flask для выполнения запросов.
+    """
+    with app.app_context():
+        # Создать пользователей
         delete_all_from_table(User)
-        create_valid_user()
+        create_test_users()
 
-        with test_app.test_client() as client:
+        with app.test_client() as client:
             yield client
 
         delete_all_from_table(User)

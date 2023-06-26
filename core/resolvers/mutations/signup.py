@@ -10,6 +10,8 @@ from core.models import User
 
 @convert_kwargs_to_snake_case
 def resolve_create_user(obj, info, **kwargs):
+    if not kwargs.get("email") or not kwargs.get("password"):
+        return create_result(status=False, errors=[Errors.WRONG_EMAIL_OR_PASSWORD])
     user = db.session.query(User).filter(User.email == kwargs["email"]).first()
     if user:
         return create_result(status=False, errors=[Errors.USER_ALREADY_EXISTS])

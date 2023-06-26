@@ -23,6 +23,8 @@ def resolve_update_user(_obj, info, **kwargs):
 
     # обновить поля user из переданных аргументов
     user = db.session.query(User).get(user_id)
+    if not user:
+        return create_result(status=False, errors=[Errors.OBJECT_NOT_FOUND])
     user.update(**kwargs)
 
     # Частные случаи полей

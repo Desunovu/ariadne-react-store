@@ -1,6 +1,8 @@
+from ariadne import convert_camel_case_to_snake
+from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
+
 from core import db
 from core.extras.common_constants import Roles, OrderStatus
-from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
 
 
 class BaseMixin(db.Model):
@@ -11,8 +13,9 @@ class BaseMixin(db.Model):
 
     def update(self, **kwargs):
         for key, value in kwargs.items():
-            if hasattr(self, key):
-                setattr(self, key, value)
+            snake_case_key = convert_camel_case_to_snake(key)
+            if hasattr(self, snake_case_key):
+                setattr(self, snake_case_key, value)
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
