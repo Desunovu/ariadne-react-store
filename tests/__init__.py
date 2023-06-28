@@ -61,14 +61,22 @@ def create_test_users():
 def create_test_products():
     """Создает записи о товарах в БД для тестирования"""
     product_1 = Product(
-        name="",
-        price=123,
-        amount=123,
+        name="One",
+        price=1,
+        amount=1,
         reserved=0,
         desctiption="Товар 1"
     )
+    product_2 = Product(
+        name="Two",
+        price=2,
+        amount=2,
+        reserved=0,
+        desctiption="Товар 2"
+    )
 
-    db.session.add(product_1)
+    for product in [product_1, product_2]:
+        db.session.add(product)
     db.session.commit()
 
 
