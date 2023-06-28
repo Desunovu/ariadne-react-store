@@ -32,7 +32,7 @@ def get_users_query(offset=None, limit=None, field=None, order=None):
 
 
 def test_successful_get_all_users_by_admin_with_args(client_with_valid_db):
-    """Тест выполнения запроса getUsers без аргументов"""
+    """Тест выполнения запроса getUsers"""
     result = execute_query(
         client=client_with_valid_db,
         token=get_token_by_role(Roles.ADMIN),
