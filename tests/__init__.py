@@ -5,8 +5,10 @@ from werkzeug.security import generate_password_hash
 
 from core import db, create_app
 from core.extras import Roles
-from core.models import User
+from core.models import User, Product
 from core.resolvers.queries.signin import resolve_login_user
+
+LARGE_ID = 999999999
 
 app = create_app()
 
@@ -56,6 +58,28 @@ def create_test_users():
     db.session.commit()
 
 
+def create_test_products():
+    """Создает записи о товарах в БД для тестирования"""
+    product_1 = Product(
+        name="One",
+        price=1,
+        amount=1,
+        reserved=0,
+        desctiption="Товар 1"
+    )
+    product_2 = Product(
+        name="Two",
+        price=2,
+        amount=2,
+        reserved=0,
+        desctiption="Товар 2"
+    )
+
+    for product in [product_1, product_2]:
+        db.session.add(product)
+    db.session.commit()
+
+
 def get_user_id_by_role(role: str = Roles.CUSTOMER) -> int:
     """
     Возвращает идентификатор пользователя с указанной ролью.
@@ -68,6 +92,12 @@ def get_user_id_by_role(role: str = Roles.CUSTOMER) -> int:
     """
     user = db.session.query(User).filter(User.role == role).first()
     return user.id
+
+
+def get_random_product_id() -> int:
+    """Возвращает первый найденный id товара"""
+    product = db.session.query(Product).first()
+    return product.id
 
 
 def get_token_by_role(role: str = Roles.CUSTOMER) -> str:
