@@ -7,7 +7,7 @@ services:
       - full
     restart: always
     build:
-      context: ./
+      context: ./backend
     ports:
       - "5000:5000"
     depends_on:
@@ -26,7 +26,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     env_file:
-      - .env
+      - backend/.env
 
   test-postgres:
     container_name: test-postgres
@@ -39,7 +39,7 @@ services:
     volumes:
       - test-postgres-data:/var/lib/postgresql/data
     env_file:
-      - testconfig_example.env
+      - backend/testconfig_example.env
 
   minio:
     container_name: minio
@@ -55,7 +55,7 @@ services:
     volumes:
       - minio-storage:/data
     env_file:
-      - .env
+      - backend/.env
     command: server --console-address ":9001" /data
 
 volumes:
