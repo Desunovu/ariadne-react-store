@@ -1,20 +1,16 @@
 # Online Store Backend
 
-This repository contains the backend application of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
-
-The frontend web client is available at the following link: [react-store-frontend](https://github.com/Desunovu/react-store-frontend)
+This repository contains the backend and frontend applications of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
 
 ## Technologies and Tools
 
 The project uses the following technologies and tools:
 
 - **Programming Language**: Python
-- **Framework**: Flask
-- **Object-Relational Mapping (ORM)**: SQLAlchemy
+- **Backend frameworks/libs**:  Ariadne, Flask, SQLAlchemy, MinIO
 - **Database**: PostgreSQL
 - **File Storage**: MinIO
-- **API**: GraphQL API
-- **GraphQL Library**: Ariadne
+- **API type**: GraphQL API
 - **Containerization**: Docker
 
 ## Requirements
