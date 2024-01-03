@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  frontend:
+    container_name: store-react-frontend
+    profiles:
+      - full
+    restart: always
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - store-backend
+
   store-backend:
     image: store-backend:latest
     container_name: store-backend
@@ -7,7 +20,8 @@ services:
       - full
     restart: always
     build:
-      context: ./
+      context: .
+      dockerfile: ./backend/Dockerfile
     ports:
       - "5000:5000"
     depends_on:
@@ -26,7 +40,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     env_file:
-      - .env
+      - backend/.env
 
   test-postgres:
     container_name: test-postgres
@@ -39,7 +53,7 @@ services:
     volumes:
       - test-postgres-data:/var/lib/postgresql/data
     env_file:
-      - testconfig_example.env
+      - backend/testconfig_example.env
 
   minio:
     container_name: minio
@@ -55,7 +69,7 @@ services:
     volumes:
       - minio-storage:/data
     env_file:
-      - .env
+      - backend/.env
     command: server --console-address ":9001" /data
 
 volumes:

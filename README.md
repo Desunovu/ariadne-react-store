@@ -1,20 +1,17 @@
-# Online Store Backend
+# Online store development using Ariadne, React and PostgreSQL
 
-This repository contains the backend application of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
-
-The frontend web client is available at the following link: [react-store-frontend](https://github.com/Desunovu/react-store-frontend)
+This repository contains the backend and frontend applications of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
 
 ## Technologies and Tools
 
 The project uses the following technologies and tools:
 
-- **Programming Language**: Python
-- **Framework**: Flask
-- **Object-Relational Mapping (ORM)**: SQLAlchemy
+- **Programming Languages**: Python, JS
+- **Backend frameworks/libs**:  Ariadne, Flask, SQLAlchemy, MinIO
+- **Frontend framework**: React
 - **Database**: PostgreSQL
 - **File Storage**: MinIO
-- **API**: GraphQL API
-- **GraphQL Library**: Ariadne
+- **API type**: GraphQL API
 - **Containerization**: Docker
 
 ## Requirements
@@ -31,23 +28,23 @@ To install and run the application in development mode, follow these steps:
 ### Cloning the Repository and Configuring Environment Variables
 
 1. Clone the repository: `git clone https://github.com/Desunovu/graphql-store-backend.git`.
-2. Navigate to the project directory.
-3. Edit the `.env` file, specifying the device address in the local network for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
+2. Rename `./backend/.env.example` to `./backend/.env`
 
 Now, run the application using one of the following methods:
 
-### Running with Docker
+#### Running with Docker
 
-1. Execute the command `docker-compose --profile full up -d` to deploy the entire application, including the required services.
+1. Edit the `./backend/.env` file, specifying the device connection address for the `MINIO_ENDPOINT` (the address must be accessible to the frontend user)
+2. Execute the command `docker-compose --profile full up --build` to deploy the entire application, including the required services.
 
-### Running the Application in Manual Mode
+#### Running the Back-end application in Manual Mode
 
 1. - Option 1: Deploy the `postgres` and `minio` services using `docker-compose --profile dev up -d`. 
    - Option 2: Deploy and configure `postgres` and `minio` services independently.
-
-2. Install the dependencies: `pip install -r requirements.txt`.
-3. Set the `FLASK_APP` environment variable to the main package name `store_backend.py`.
-4. Run the application: `flask run`.
+2. Edit the `./backend/.env` file, specifying the connection address for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
+3. Install the dependencies: `pip install -r requirements.txt`.
+4. Set the `FLASK_APP` environment variable to the main package name `store_backend.py`.
+5. Run the application: `flask run`.
 
 ## GraphQL API
 
