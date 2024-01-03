@@ -32,13 +32,14 @@ Now, run the application using one of the following methods:
 
 #### Running with Docker
 
-1. Execute the command `docker-compose --profile full up --build` to deploy the entire application, including the required services.
+1. Edit the `./backend/.env` file, specifying the device connection address for the `MINIO_ENDPOINT` (the address must be accessible to the frontend user)
+2. Execute the command `docker-compose --profile full up --build` to deploy the entire application, including the required services.
 
 #### Running the Application in Manual Mode
 
 1. - Option 1: Deploy the `postgres` and `minio` services using `docker-compose --profile dev up -d`. 
    - Option 2: Deploy and configure `postgres` and `minio` services independently.
-2. Edit the `.env` file, specifying the connection address for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
+2. Edit the `./backend/.env` file, specifying the connection address for the `MINIO_ENDPOINT` and `POSTGRES_HOST` variables.
 3. Install the dependencies: `pip install -r requirements.txt`.
 4. Set the `FLASK_APP` environment variable to the main package name `store_backend.py`.
 5. Run the application: `flask run`.

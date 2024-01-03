@@ -1,8 +1,9 @@
 FROM python:3.10-alpine
 
-
-WORKDIR /app
-COPY . .
+RUN mkdir "backend"
+WORKDIR /backend
+COPY /backend/requirements.txt ./
 RUN pip install -r ./requirements.txt
 
-ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
+COPY /backend/ ./
+ENTRYPOINT ["sh", "/backend/docker-entrypoint.sh"]

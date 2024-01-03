@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  frontend:
+    container_name: store-react-frontend
+    profiles:
+      - full
+    restart: always
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - store-backend
+
   store-backend:
     image: store-backend:latest
     container_name: store-backend
@@ -7,7 +20,8 @@ services:
       - full
     restart: always
     build:
-      context: ./backend
+      context: .
+      dockerfile: ./backend/Dockerfile
     ports:
       - "5000:5000"
     depends_on:
