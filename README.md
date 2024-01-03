@@ -1,4 +1,4 @@
-# Online Store Backend
+# Online store development using Ariadne, React and PostgreSQL
 
 This repository contains the backend and frontend applications of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
 
@@ -6,8 +6,9 @@ This repository contains the backend and frontend applications of an educational
 
 The project uses the following technologies and tools:
 
-- **Programming Language**: Python
+- **Programming Languages**: Python, JS
 - **Backend frameworks/libs**:  Ariadne, Flask, SQLAlchemy, MinIO
+- **Frontend framework**: React
 - **Database**: PostgreSQL
 - **File Storage**: MinIO
 - **API type**: GraphQL API
