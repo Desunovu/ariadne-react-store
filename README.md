@@ -27,6 +27,7 @@ To install and run the application in development mode, follow these steps:
 ### Cloning the Repository and Configuring Environment Variables
 
 1. Clone the repository: `git clone https://github.com/Desunovu/graphql-store-backend.git`.
+2. Rename `./backend/.env.example` to `./backend/.env`
 
 Now, run the application using one of the following methods:
 
@@ -35,7 +36,7 @@ Now, run the application using one of the following methods:
 1. Edit the `./backend/.env` file, specifying the device connection address for the `MINIO_ENDPOINT` (the address must be accessible to the frontend user)
 2. Execute the command `docker-compose --profile full up --build` to deploy the entire application, including the required services.
 
-#### Running the Application in Manual Mode
+#### Running the Back-end application in Manual Mode
 
 1. - Option 1: Deploy the `postgres` and `minio` services using `docker-compose --profile dev up -d`. 
    - Option 2: Deploy and configure `postgres` and `minio` services independently.

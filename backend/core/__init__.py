@@ -8,7 +8,7 @@ from flask_migrate import Migrate, upgrade
 from flask_sqlalchemy import SQLAlchemy
 from minio import Minio
 
-# Если не обнаружены переменные окружения - загрузить из .env
+# Если не обнаружены переменные окружения - загрузить из .env.example
 if not os.environ.get("FLASK_CONFIG"):
     dotenv.load_dotenv()
 
