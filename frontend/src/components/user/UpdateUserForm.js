@@ -29,7 +29,7 @@ export function UpdateUserForm({ user, setSelectedAction }) {
   function onEditButtonClick() {
     updateUser({
       variables: {
-        id: values.id.toString(),
+        id: values.id,
         email: values.email,
         password: values.password,
         firstName: values.firstName,

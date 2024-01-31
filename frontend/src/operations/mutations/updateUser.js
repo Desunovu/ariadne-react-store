@@ -2,7 +2,7 @@ import { gql } from "@apollo/react-hooks";
 
 export const UPDATE_USER = gql`
   mutation UpdateUser(
-    $id: String
+    $id: Int
     $email: String
     $password: String
     $firstName: String

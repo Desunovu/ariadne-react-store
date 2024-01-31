@@ -26,12 +26,7 @@ export function AvatarUploader({ userId }) {
           userId: userId,
         },
       });
-
-      if (data.uploadAvatar.status) {
-        return data.uploadAvatar.presignedUrl;
-      } else {
-        setErrors((prevState) => [...prevState, ...data.uploadAvatar.errors]);
-      }
+      return data.uploadAvatar.presignedUrl;
     } catch (error) {
       console.error("Ошибка получения предварительно подписанного URL:", error);
     }

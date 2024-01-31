@@ -2,6 +2,10 @@
 
 This repository contains the backend and frontend applications of an educational online store project. It provides functionalities for managing products, users, cart, orders, authentication, and related operations.
 
+![demo_homepage.png](/demo-assets/demo_homepage.png)
+
+**[Detailed demo screenshots](demo-assets/demo-screenshots.md)** 
+
 ## Technologies and Tools
 
 The project uses the following technologies and tools:

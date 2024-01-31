@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  frontend:
+  store-frontend:
     container_name: store-react-frontend
     profiles:
       - full
@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: ./frontend/Dockerfile
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - store-backend
 
