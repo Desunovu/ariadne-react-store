@@ -5,11 +5,6 @@ export const UPLOAD_AVATAR = gql`
     $userId: Int!
   ) {
   uploadAvatar(userId: $userId) {
-    status
-    errors {
-      code
-      message
-    }
     presignedUrl
   }
 }
